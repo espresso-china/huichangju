@@ -1,0 +1,96 @@
+<div class="layui-form" action="" lay-filter="form-focus">
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">焦点图名称</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="name" lay-verify="required" lay-filter="name" autocomplete="off"
+                       placeholder="请输入轮播图名称" class="layui-input" value="{{ d.params.name || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片类别</label>
+        <div class="layui-col-md6">
+            <script type="text/html" template>
+                <select name="type" lay-verify="required" data-value="{{ d.params.type || '' }}"
+                        lay-search="true" id="type_select">
+                </select>
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">焦点图片</label>
+        <div class="layui-input-block">
+            <script type="text/html" template lay-done="layui.data.doneUpload(d);">
+                <div class="layui-input-inline">
+                    <input name="thumb" lay-verify="required" id="thumb" placeholder="图片地址"
+                           value="{{ d.params.thumb || '' }}" class="layui-input">
+                </div>
+                <div class="layui-input-inline layui-btn-container" style="width: auto;">
+                    <button type="button" class="layui-btn layui-btn-primary LAY_Upload"
+                            lay-data="{type:'normal',pic:'qiniu_url','id':'thumb'}">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </button>
+                    <button class="layui-btn layui-btn-primary" layadmin-event="Preview" data-id="thumb">查看图片</button>
+                </div>
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">跳转地址</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="url"
+                       placeholder="请输入跳转地址" class="layui-input" value="{{ d.params.url || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <script type="text/html" template>
+                    <input type="text" name="listorder" lay-verify="number" lay-filter="listorder"
+                           placeholder="请输入数字，值越小越靠前" class="layui-input" value="{{ d.params.listorder || '9999' }}">
+                </script>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <script type="text/html" template>
+                    <input type="checkbox" name="status" value="{{ d.params.status || 1 }}" id="status" {{#
+                           if(d.params.status== 1) { }}
+                           checked{{# } }}
+                           lay-skin="switch" lay-filter="status"
+                           lay-text="启用|禁用">
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="layui-footer">
+                <button class="layui-btn" lay-submit="" lay-filter="form-focus-submit">立即提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'form', 'layer'], function () {
+        var layer = layui.layer
+            , form = layui.form;
+
+        form.render();
+
+        /* 监听指定开关 */
+        form.on('switch(status)', function (data) {
+            layer.tips('温馨提示：启用表示可用，禁用表示资源不可用', data.othis)
+        });
+    });
+    layui.data.doneUpload = function (d) {
+        layui.use('uploadCfg', layui.factory('uploadCfg'));
+    };
+</script>

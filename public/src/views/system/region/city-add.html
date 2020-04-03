@@ -1,0 +1,128 @@
+<style>
+    .layui-form-select dl { max-height:150px; }
+</style>
+
+<div class="layui-form" action="" lay-filter="form-system-city" id="form-system-city">
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级省份</label>
+        <div class="layui-col-md7">
+            <script type="text/html" template>
+                <select name="province_id" lay-verify="required" data-value="{{ d.params.province_id || '' }}"
+                        lay-search="true" id="province_select"></select>
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">首字母</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="begins" lay-filter="begins"
+                       autocomplete="off"
+                       placeholder="请输入地区首字母" class="layui-input" value="{{ d.params.begins || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">城市名称</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="city_name" lay-verify="required" lay-filter="city_name"
+                       autocomplete="off"
+                       placeholder="请输入城市名称" class="layui-input" value="{{ d.params.city_name || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">地区编码</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="city_code"  lay-filter="city_code"
+                       autocomplete="off"
+                       placeholder="请输入城市名称" class="layui-input" value="{{ d.params.city_code || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">邮政编码</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="zipcode" lay-verify="number" lay-filter="zipcode"
+                       autocomplete="off"
+                       placeholder="请输入邮政编码" class="layui-input" value="{{ d.params.zipcode || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">排序值</label>
+            <div class="layui-input-block">
+                <script type="text/html" template>
+                    <input type="text" name="listorder" lay-verify="number" lay-filter="listorder"
+                           placeholder="请输入数字，值越小越靠前" class="layui-input" value="{{ d.params.listorder || '999' }}">
+                </script>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">是否开通分站</label>
+            <div class="layui-input-block">
+                <script type="text/html" template>
+                    <input type="checkbox" name="is_open" value="{{ d.params.is_open || 1 }}" id="is_open" {{#
+                           if(d.params.is_open== 1) { }}
+                           checked{{# } }}
+                           lay-skin="switch" lay-filter="is_open"
+                           lay-text="是|否">
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="layui-footer">
+                <button class="layui-btn" type="button" lay-submit="" lay-filter="form-system-city-submit">立即提交
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    layui.use(['admin', 'form'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , form = layui.form;
+
+        admin.req({
+            url: '../api/system/province/lists',
+            data: {status: 1},
+            type: 'post',
+            done: function (res) {
+                var html = '<option value="">请选择上级省份</option>';
+                var province_id = $('#province_select').data('value');
+                $.each(res.data, function (index, item) {
+
+                    if (item.province_id == province_id) {
+                        var selected = 'selected';
+                    } else {
+                        var selected = ''
+                    }
+                    html += '<option value="' + item.province_id + '"  ' + selected + '>' + item.province_name + '</option>';
+                });
+                $('#province_select').html(html);
+                layui.form.render('select');
+            }, error: function () {
+                alert('查询部门失败！！！')
+            }
+        });
+        /* 自定义验证规则 */
+
+        form.on('switch(is_open)', function (data) {
+            layer.tips('温馨提示：是表示开通分站，否表示不开通分站', data.othis)
+        });
+        /* 监听指定开关 */
+
+
+    });
+
+
+</script>

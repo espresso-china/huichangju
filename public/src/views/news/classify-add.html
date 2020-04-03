@@ -1,0 +1,104 @@
+<div class="layui-form" action="" lay-filter="form-classify">
+    <!--<div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">父级菜单</label>
+            <div class="layui-input-block">
+                <select id="form-classify-fid" name="fid" lay-verify="fid">
+                    <option value="0">顶级菜单</option>
+                </select>
+            </div>
+        </div>
+    </div>-->
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="title" lay-verify="required" lay-filter="title" autocomplete="off"
+                       placeholder="请输入分类名称" class="layui-input" value="{{ d.params.title || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">图标</label>
+        <div class="layui-input-block">
+            <script type="text/html" template lay-done="layui.data.doneUpload(d);">
+                <div class="layui-input-inline">
+                    <input name="thumb" lay-verify="required" id="thumb" placeholder="图片地址"
+                           value="{{ d.params.thumb || '' }}" class="layui-input">
+                </div>
+                <div class="layui-input-inline layui-btn-container" style="width: auto;">
+                    <button type="button" class="layui-btn layui-btn-primary LAY_Upload"
+                            lay-data="{type:'news',pic:'large','id':'thumb'}">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </button>
+                    <button class="layui-btn layui-btn-primary" layadmin-event="Preview" data-id="thumb">查看图片</button>
+                </div>
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <textarea name="description" placeholder="请输入描述" lay-filter="description"
+                          class="layui-textarea">{{ d.params.description || '' }}</textarea>
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">排序值</label>
+            <div class="layui-input-block">
+                <script type="text/html" template>
+                    <input type="text" name="listorder" lay-verify="number" lay-filter="listorder"
+                           placeholder="请输入数字，值越小越靠前" class="layui-input" value="{{ d.params.listorder || '9999' }}">
+                </script>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">分类状态</label>
+            <div class="layui-input-block">
+                <script type="text/html" template>
+                    <input type="checkbox" name="status" value="{{ d.params.status || 1 }}" id="status" {{#
+                           if(d.params.status== 1) { }}
+                           checked{{# } }}
+                           lay-skin="switch" lay-filter="status"
+                           lay-text="启用|禁用">
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="layui-footer">
+                <button class="layui-btn" lay-submit="" lay-filter="form-classify-submit">立即提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'form', 'layer'], function () {
+        var layer = layui.layer
+            , form = layui.form;
+
+        /* 自定义验证规则 */
+        form.verify({
+            title: function (value) {
+                if (value.length < 1) {
+                    return '分类名称不能为空';
+                }
+            }
+        });
+
+
+        /* 监听指定开关 */
+        form.on('switch(status)', function (data) {
+            layer.tips('温馨提示：启用表示分类可用，禁用表示资源不可用', data.othis)
+        });
+    });
+    layui.data.doneUpload = function (d) {
+        layui.use('uploadCfg', layui.factory('uploadCfg'));
+    };
+</script>

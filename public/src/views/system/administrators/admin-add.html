@@ -1,0 +1,98 @@
+<div class="layui-form" lay-filter="layuiadmin-form-admin">
+  <div class="layui-col-md11">
+    <div class="layui-form-item" id="admin_user_type">
+      <label class="layui-form-label">所属后台</label>
+      <div class="layui-input-block">
+        <script type="text/html" template>
+          <input type="radio" name="type" value="1" title="平台" lay-verify="required" lay-filter="type"
+                 {{ d.params.type==1?'checked':'' }}>
+          <input type="radio" name="type" value="2" title="门店" lay-verify="required" lay-filter="type"
+                 {{ d.params.type==2?'checked':'' }}>
+        </script>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">登录名</label>
+      <div class="layui-input-block">
+        <script type="text/html" template>
+          <input type="text" name="name" value="{{ d.params.name || '' }}" lay-verify="required"
+                 placeholder="请输入用户名"
+                 autocomplete="off" class="layui-input">
+        </script>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">手机</label>
+      <div class="layui-input-block">
+        <script type="text/html" template>
+          <input type="text" name="phone" value="{{ d.params.phone || '' }}" lay-verify="phone"
+                 placeholder="请输入号码"
+                 autocomplete="off" class="layui-input">
+        </script>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">邮箱</label>
+      <div class="layui-input-block">
+        <script type="text/html" template>
+          <input type="text" name="user_email" value="{{ d.params.user_email || '' }}" lay-verify="email"
+                 placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+        </script>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">密码</label>
+      <div class="layui-input-block">
+        <script type="text/html" template>
+          <input type="text" name="password" value="{{ d.params.password || '' }}" lay-verify="required|password"
+                 placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </script>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">角色</label>
+      <div id="layui-roles" class="layui-input-block" style="width: 300px;">
+      </div>
+    </div>
+    <div class="layui-form-item" id="admin_user_shop_id">
+      <label class="layui-form-label">所属店铺</label>
+      <div class="layui-input-block">
+        <script type="text/html" template>
+          <select id="shop_id" name="shop_id" lay-verify="shop_id" lay-search="true">
+          </select>
+        </script>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">状态</label>
+      <div class="layui-input-block">
+        <script type="text/html" template>
+          <input type="checkbox" lay-filter="switch" name="disabled" value="1" lay-skin="switch" lay-text="开启|禁用"
+                 {{ d.params.disabled ? 'checked' : '' }}>
+        </script>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label"></label>
+      <div class="layui-input-block">
+        <script type="text/html" template>
+          <input type="hidden" id="userId" name="id" value="{{ d.params.id || '0' }}" class="layui-input">
+        </script>
+        <input type="button" lay-submit lay-filter="LAY-user-back-submit" value="确认" class="layui-btn">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    layui.use(['admin', 'form'], function () {
+        var $ = layui.$, form = layui.form, admin = layui.admin;
+        var user = layui.data('layuiAdmin').user;
+
+        //当前商家增加时隐藏选择
+        if (user.type == 2) {
+            $("#admin_user_type").hide();
+            $("#admin_user_shop_id").hide();
+        }
+    });
+</script>

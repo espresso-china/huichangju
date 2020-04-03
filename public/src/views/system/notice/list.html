@@ -1,0 +1,255 @@
+<title>消息通知</title>
+
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>设置</cite></a>
+    <a><cite>消息通知</cite></a>
+  </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="layadmin-notice-search">
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">用户</label>
+          <div class="layui-input-block">
+            <input type="text" name="noticename" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">邮箱</label>
+          <div class="layui-input-block">
+            <input type="text" name="email" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label">性别</label>-->
+        <!--<div class="layui-input-block">-->
+        <!--<select name="sex">-->
+        <!--<option value="0">不限</option>-->
+        <!--<option value="1">男</option>-->
+        <!--<option value="2">女</option>-->
+        <!--</select>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="layui-inline">
+          <button class="layui-btn layuiadmin-btn-notice" lay-submit lay-filter="LAY-notice-front-search">
+            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-card-body">
+      <script type="text/html" id="table-notice-toolbar">
+        <!--
+        <button class="layui-btn layui-btn-sm layuiadmin-btn-notice" data-type="batchdel">删除</button>
+        <button class="layui-btn layui-btn-sm layuiadmin-btn-notice" data-type="add">添加</button>
+        -->
+      </script>
+
+      <table id="LAY-notice-manage" lay-filter="LAY-notice-manage"></table>
+
+      <script type="text/html" id="table-notice-bar">
+        <div class="layui-btn-group">
+          <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="info">
+            <i class="layui-icon layui-icon-info"></i>详情</a>
+          <!--
+          <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">
+            <i class="layui-icon layui-icon-edit"></i>编辑</a>
+          <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">
+            <i class="layui-icon layui-icon-delete"></i>删除</a>
+          -->
+        </div>
+      </script>
+    </div>
+  </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , view = layui.view
+            , table = layui.table
+            , form = layui.form;
+
+        form.render(null, 'layadmin-notice-search');
+
+        //监听搜索
+        form.on('submit(LAY-notice-front-search)', function (data) {
+            var field = data.field;
+
+            //执行重载
+            table.reload('LAY-notice-manage', {
+                where: field
+            });
+        });
+
+
+        table.render({
+            elem: '#LAY-notice-manage'
+            , url: '../api/notice/lists?token=' + layui.data('layuiAdmin').token
+            , toolbar: '#table-notice-toolbar'
+            , title: '通知消息'
+            , height: 'full-250'
+            , cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                , {
+                    field: 'id',
+                    title: 'ID',
+                    width: 60,
+                    fixed: 'left',
+                    align: 'center',
+                    unresize: true,
+                    sort: true
+                }
+                , {field: 'notice_type_name', title: '类型', align: 'left', minWidth: 100}
+                , {field: 'to_uid', title: '接收方', align: 'left', minWidth: 100}
+                , {field: 'notice_method', title: '发送方式', align: 'center', minWidth: 100}
+                , {
+                    field: 'is_enable', title: '状态', align: 'center', minWidth: 60, templet: function (d) {
+                        return d.is_enable == 1 ? '启用' : '禁用';
+                    }
+                }
+                , {field: 'status_name', title: '发送状态', align: 'center', minWidth: 60}
+                , {field: 'notice_message', title: '内容', align: 'left', minWidth: 200}
+                , {field: 'create_time', title: '时间', align: 'center', minWidth: 180}
+                , {fixed: 'right', title: '操作', toolbar: '#table-notice-bar', align: 'center', minWidth: 80}
+            ]]
+            , page: true
+            , done: function (res) {
+                if (res.code == layui.setter.response.statusCode.logout) {
+                    layer.alert(res.msg, function (index) {
+                        layer.close(index);
+                        view.exit();
+                    });
+                }
+            }
+        });
+
+
+        //监听行工具事件
+        table.on('tool(LAY-notice-manage)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                admin.popup({
+                    title: '编辑通知'
+                    , area: ['50%', '500px']
+                    , id: 'LAY-popup-notice-edit'
+                    , success: function (layero, index) {
+                        view(this.id).render('system/notice/notice-form', data).done(function () {
+                            form.render(null, 'form-notice');
+                            //监听提交
+                            form.on('submit(form-notice-submit)', function (formData) {
+                                formData.field['id'] = data.id;
+                                admin.req({
+                                    url: '../api/notices/save'
+                                    , data: formData.field
+                                    , async: false
+                                    , type: 'post'
+                                    , done: function (res) {
+                                        if (res.code == 0) {
+                                            parent.layer.closeAll();
+                                            parent.layui.table.reload('LAY-notice-manage');
+                                            layer.msg(res.msg, {icon: 1, time: 1000})
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2, time: 3000})
+                                        }
+                                    }
+                                })
+                            });
+                        });
+                    }
+                });
+            } else if (obj.event === 'info') {
+                admin.popup({
+                    title: '查看通知'
+                    , area: ['50%', '600px']
+                    , id: 'LAY-popup-notice-edit'
+                    , success: function (layero, index) {
+                        view(this.id).render('system/notice/notice-info', data).done(function () {
+
+                        });
+                    }
+                });
+            }
+        });
+
+
+        //事件
+        var active = {
+            batchdel: function () {
+                var checkStatus = table.checkStatus('LAY-notice-manage')
+                    , checkData = checkStatus.data; //得到选中的数据
+
+                if (checkData.length === 0) {
+                    return layer.msg('请选择数据');
+                }
+
+                layer.prompt({
+                    formType: 1
+                    , title: '敏感操作，请验证口令'
+                }, function (value, index) {
+                    layer.close(index);
+
+                    layer.confirm('确定删除吗？', function (index) {
+
+                        //执行 Ajax 后重载
+                        /*
+                        admin.req({
+                          url: 'xxx'
+                          //,……
+                        });
+                        */
+                        table.reload('LAY-notice-manage');
+                        layer.msg('已删除');
+                    });
+                });
+            }
+            , add: function () {
+                admin.popup({
+                    title: '添加通知'
+                    , area: ['500px', '450px']
+                    , id: 'LAY-popup-notice-add'
+                    , success: function (layero, index) {
+                        view(this.id).render('system/notice/notice-form').done(function () {
+
+                            form.on('submit(form-notice-submit)', function (formData) {
+                                formData.field['id'] = 0;
+                                admin.req({
+                                    url: '../api/notices/save'
+                                    , data: formData.field
+                                    , async: false
+                                    , type: 'post'
+                                    , done: function (res) {
+                                        if (res.status == 0) {
+                                            parent.layer.closeAll();
+                                            parent.layui.table.reload('LAY-notice-manage');
+                                            layer.msg(res.msg, {icon: 1, time: 1000})
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2, time: 3000})
+                                        }
+                                    }
+                                })
+                            });
+
+                        });
+                    }
+                });
+            }
+        };
+
+        $('.layui-btn.layuiadmin-btn-notice').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>

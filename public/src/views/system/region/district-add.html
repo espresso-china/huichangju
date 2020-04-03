@@ -1,0 +1,132 @@
+<style>
+    .layui-form-select dl {
+        max-height: 150px;
+    }
+</style>
+
+<div class="layui-form" action="" lay-filter="form-system-district" id="form-system-district">
+    <div class="layui-form-item">
+        <label class="layui-form-label">省份</label>
+        <div class="layui-col-md6">
+            <script type="text/html" template>
+                <select name="province_id" lay-filter="province_id" lay-verify="required"
+                        data-value="{{ d.params.province_id}}"
+                        lay-search="true"
+                        id="province_id">
+                </select>
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">城市</label>
+        <div class="layui-col-md6">
+            <script type="text/html" template>
+                <select name="city_id" lay-filter="city_id" lay-verify="required" data-value="{{ d.params.city_id}}"
+                        lay-search="true"
+                        id="city_id">
+                </select>
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">区县名称</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="district_name" lay-verify="required" lay-filter="district_name"
+                       autocomplete="off"
+                       placeholder="请输入城市名称" class="layui-input" value="{{ d.params.district_name || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="layui-footer">
+                <button class="layui-btn" type="button" lay-submit="" lay-filter="form-system-district-submit">立即提交
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['admin', 'form'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , form = layui.form;
+        var province_id;
+        admin.req({
+            url: '../api/system/city/lists',
+            data: {status: 1, cityId: $('#city_id').data('value')},
+            type: 'post',
+            done: function (res) {
+                var html = '<option value="">请选择城市</option>';
+                var city_id = $('#city_id').data('value');
+                $.each(res.data, function (index, item) {
+                    if (item.city_id == city_id) {
+                        var selected = 'selected';
+                        province_id = item.province_id;
+                        html += '<option value="' + item.city_id + '"  ' + selected + '>' + item.city_name + '</option>';
+                    }
+                });
+                $('#city_id').html(html);
+                form.render('select');
+                admin.req({
+                    url: '../api/system/province/lists',
+                    data: {status: 1},
+                    type: 'post',
+                    done: function (res) {
+                        var html = '<option value="">请选择省份</option>';
+                        $.each(res.data, function (index, item) {
+                            if (item.province_id == province_id) {
+                                var selected = 'selected';
+
+                            } else {
+                                var selected = ''
+                            }
+                            html += '<option value="' + item.province_id + '"  ' + selected + '>' + item.province_name + '</option>';
+                        });
+                        $('#province_id').html(html);
+                        form.render('select');
+                    }, error: function () {
+                        alert('查询省份失败！！！')
+                    }
+                });
+
+            }, error: function () {
+                alert('查询城市失败！！！')
+            }
+        });
+
+
+        form.on('select(province_id)', function (data) {
+            var province_id = data.value;
+            admin.req({
+                url: '../api/system/city/province/lists',
+                data: {province_id: province_id},
+                type: 'post',
+                done: function (res) {
+                    var html = '<option value="">请选择城市</option>';
+                    var city_id = $('#city_id').data('value');
+                    $.each(res.data, function (index, item) {
+                        if (item.city_id == city_id) {
+                            var selected = 'selected';
+                        } else {
+                            var selected = ''
+                        }
+                        html += '<option value="' + item.city_id + '"  ' + selected + '>' + item.city_name + '</option>';
+                    });
+                    $('#city_id').html(html);
+                    form.render('select');
+                }, error: function () {
+                    alert('查询城市失败！！！')
+                }
+            })
+        });
+        /* 自定义验证规则 */
+
+        /* 监听指定开关 */
+
+
+    });
+</script>

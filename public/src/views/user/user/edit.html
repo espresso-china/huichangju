@@ -1,0 +1,18 @@
+<div class="layui-form" action="" lay-filter="form-suggest">
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">回复</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <textarea name="reply" lay-verify="required" placeholder="请输入回复内容" lay-filter="reply"
+                          class="layui-textarea">{{d.params.reply?d.params.reply:''}}</textarea>
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="layui-footer">
+                <button class="layui-btn" lay-submit="" lay-filter="form-suggest-submit">立即提交</button>
+            </div>
+        </div>
+    </div>
+</div>

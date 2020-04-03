@@ -1,0 +1,278 @@
+<title>资讯分类列表</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>内容</cite></a>
+        <a><cite>资讯分类列表</cite></a>
+    </div>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">资讯分类列表</div>
+
+                <div class="layui-card-body">
+                    <div class="layui-btn-group classify-table-operate-btn" style="margin-bottom: 10px;float: right">
+                        <button class="layui-btn" data-type="add">添加分类</button>
+                    </div>
+
+                    <div class="classify-table-operate-btn" style="margin-bottom: 10px;">
+                        分类名称：
+                        <div class="layui-inline">
+                            <input class="layui-input" name="title" id="classify-search-name" autocomplete="off">
+                        </div>
+                        <button class="layui-btn" data-type="search">搜索</button>
+                    </div>
+                    <table class="layui-hide" id="classify-table" lay-filter="classify-table"></table>
+
+                    <script type="text/html" id="imgTpl">
+                        <img style="display: inline-block; width: 40px; height: 30px;" src={{ d.thumb }}>
+                    </script>
+
+                    <script type="text/html" id="classify-table-toolbar">
+                        <div class="layui-btn-container">
+                            <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="setStatusData">
+                                <i class="layui-icon layui-icon-ok-circle"></i>启用
+                            </button>
+                            <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="cancelStatusData">
+                                <i class="layui-icon layui-icon-close-fill"></i>禁用
+                            </button>
+                        </div>
+                    </script>
+
+                    <script type="text/html" id="classify-table-bar">
+                        <div class="layui-btn-group">
+                            <!--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>-->
+                            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                        </div>
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'form'], function () {
+        var admin = layui.admin
+            , table = layui.table
+            , view = layui.view
+            , form = layui.form;
+
+        table.render({
+            elem: '#classify-table'
+            , url: '../api/classify/lists?token=' + layui.data('layuiAdmin').token
+            , toolbar: '#classify-table-toolbar'
+            , title: '资讯信息表'
+            , height: 'full-250'
+            , cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                // , {
+                //     field: 'thumb',
+                //     title: '图标',
+                //     width: 100,
+                //     align: 'center',
+                //     templet: '<div><image src="/{{d.thumb}}" width="28px" height="28px"></div>'
+                // }
+                , {field: 'title', title: '分类名称', edit: 'text'}
+                , {
+                    field: 'status', title: '启用/禁用', align: 'center', width:90, templet: function (d) {
+                        switch (d.status) {
+                            case 1:
+                                return '<span style="color: #0c0;">启用</span>';
+                            case 0:
+                                return '<span style="color: #c00;">禁用</span>';
+                            default:
+                                return '违禁';
+                        }
+                    }
+                }
+                , {field: 'create_time', title: '加入时间', width: 170, align: 'center'}
+                , {fixed: 'right', title: '操作', toolbar: '#classify-table-bar', align: 'center', width: 100}
+            ]]
+            , page: true
+            , done: function (res) {
+                if (res.code == layui.setter.response.statusCode.logout) {
+                    layer.alert(res.msg, function (index) {
+                        layer.close(index);
+                        view.exit();
+                    });
+                }
+            }
+        });
+
+        //头工具栏事件
+        table.on('toolbar(classify-table)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'setStatusData':
+                    var data = checkStatus.data;
+                    if (data != '') {
+                        admin.req({
+                            url: '../api/classify/lists/status'
+                            , data: {data: data}
+                            , type: 'post'
+                            , done: function (res) {
+                                if (res.code == 0) {
+                                    layer.alert(res.msg, {icon: 1, time: 1000});
+                                    table.reload('classify-table', {
+                                        page: {
+                                            curr: 1 //重新从第 1 页开始
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        layer.alert('请至少选择一条数据');
+                    }
+                    break;
+                case 'cancelStatusData':
+                    var data = checkStatus.data;
+                    if (data != '') {
+                        admin.req({
+                            url: '../api/classify/lists/cancel/status'
+                            , data: {data: data}
+                            , type: 'post'
+                            , done: function (res) {
+                                if (res.code == 0) {
+                                    layer.alert(res.msg, {icon: 1, time: 1000});
+                                    table.reload('classify-table', {
+                                        page: {
+                                            curr: 1 //重新从第 1 页开始
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        layer.alert('请至少选择一条数据');
+                    }
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                    break;
+            }
+            ;
+        });
+
+        //监听行工具事件
+        table.on('tool(classify-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    admin.req({
+                        url: '../api/classify/delete?token=' + layui.data('layuiAdmin').token,
+                        type: "post",
+                        data: {id: data.id},
+                        async: false,
+                        done: function (res) {
+                            if (res.status == 0) {
+                                obj.del();
+                                layer.close(index);
+                                layer.msg(res.msg, {icon: 1, time: 1000})
+                            } else {
+                                layer.msg(res.msg, {icon: 2, time: 3000})
+                            }
+                        }
+                    })
+                });
+            } else if (obj.event === 'edit') {
+                admin.popup({
+                    title: '编辑分类'
+                    , area: ['50%', '50%']
+                    , id: 'LAY-popup-classify-add'
+                    , success: function (layero, index) {
+                        view(this.id).render('news/classify-add', data).done(function () {
+                            form.on('switch(status)', function (dd) {
+                                dd.elem.checked ? $('#status').val(1) : $('#status').val(0);
+                            });
+                            form.render(null, 'form-classify');
+                            //监听提交
+                            form.on('submit(form-classify-submit)', function (formData) {
+                                formData.field['id'] = data.id;
+                                admin.req({
+                                    url: '../api/classify/add'
+                                    , data: formData.field
+                                    , async: false
+                                    , type: 'post'
+                                    , done: function (res) {
+                                        if (res.status == 0) {
+                                            parent.layer.closeAll();
+                                            parent.layui.table.reload('classify-table');
+                                            layer.msg(res.msg, {icon: 1, time: 1000})
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2, time: 3000})
+                                        }
+                                    }
+                                })
+                            });
+
+                        });
+                    }
+                });
+            }
+        });
+
+        var $ = layui.$, active = {
+            search: function () {
+                //执行重载
+                table.reload('classify-table', {
+                    url: '../api/classify/lists?token=' + layui.data('layuiAdmin').token
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        title: $('#classify-search-name').val(),
+                    }
+                });
+            },
+            add: function () { //获取选中数据
+                admin.popup({
+                    title: '新增资讯分类'
+                    , area: ['50%', '50%']
+                    , id: 'LAY-popup-classify-add'
+                    , success: function (layero, index) {
+                        view(this.id).render('news/classify-add').done(function () {
+                            form.render(null, 'form-classify');
+                            //监听提交
+                            form.on('submit(form-classify-submit)', function (formData) {
+                                formData.field['id'] = 0;
+                                admin.req({
+                                    url: '../api/classify/add'
+                                    , data: formData.field
+                                    , async: false
+                                    , type: 'post'
+                                    , done: function (res) {
+                                        if (res.status == 0) {
+                                            parent.layer.closeAll();
+                                            parent.layui.table.reload('classify-table');
+                                            layer.msg(res.msg, {icon: 1, time: 1000})
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2, time: 3000})
+                                        }
+                                    }
+                                })
+                            });
+                        });
+                    }
+                });
+            }
+        };
+
+
+        $('.classify-table-operate-btn .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>

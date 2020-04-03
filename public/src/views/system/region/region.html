@@ -1,0 +1,598 @@
+<title>地区管理</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>设置</cite></a>
+        <a><cite>地区管理</cite></a>
+    </div>
+</div>
+
+<div class="layui-tab layui-tab-brief" lay-filter="component-tabs-hash">
+    <ul class="layui-tab-title">
+        <li class="layui-this" lay-id="1">省份</li>
+        <li lay-id="2">城市</li>
+        <li lay-id="3">区县</li>
+    </ul>
+
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-fluid">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header">省份</div>
+                            <div class="layui-card-body">
+                                <div class="layui-btn-group system-province-table-operate-btn"
+                                     style="margin-bottom: 10px;float: right">
+                                    <button class="layui-btn" data-type="add">添加省份</button>
+                                </div>
+                                <div class="system-province-table-operate-btn" style="margin-bottom: 10px;">
+                                    省份名称：
+                                    <div class="layui-inline">
+                                        <input class="layui-input" name="name" id="system-province-search-name"
+                                               autocomplete="off">
+                                    </div>
+                                    <button class="layui-btn" data-type="search">搜索</button>
+                                </div>
+                                <table class="layui-hide" id="system-province-table"
+                                       lay-filter="system-province-table"></table>
+
+                                <script type="text/html" id="imgTp">
+                                    <img style="display: inline-block; width: 40px; height: 30px;" src={{ d.thumb }}>
+                                </script>
+
+                                <script type="text/html" id="system-province-table-bar">
+                                    <div class="layui-btn-group">
+                                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                                    </div>
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+
+            <div class="layui-fluid">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header">城市</div>
+                            <div class="layui-card-body">
+                                <div class="layui-btn-group system-city-table-operate-btn"
+                                     style="margin-bottom: 10px;float: right">
+                                    <button class="layui-btn" data-type="add">添加城市</button>
+                                </div>
+                                <div class="system-city-table-operate-btn" style="margin-bottom: 10px;">
+                                    <div class="layui-form">
+                                        城市名称：
+                                        <div class="layui-inline">
+                                            <input class="layui-input" name="name" id="system-city-search-name"
+                                                   autocomplete="off">
+                                        </div>
+                                        是否开通分站：
+                                        <div class="layui-inline">
+                                            <select name="is_open" lay-verify="" data-value=""
+                                                    lay-search="true" id="system-city-search-open">
+                                                <option value="">是否开通分站</option>
+                                                <option value="0">未开通</option>
+                                                <option value="1">开通</option>
+                                            </select>
+                                        </div>
+                                        <button class="layui-btn" data-type="search">搜索</button>
+                                    </div>
+                                </div>
+                                <table class="layui-hide" id="system-city-table" lay-filter="system-city-table"></table>
+
+
+
+                                <script type="text/html" id="system-city-table-bar">
+                                    <div class="layui-btn-group">
+                                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                                    </div>
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-fluid">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header">区县</div>
+                            <div class="layui-card-body">
+                                <div class="layui-btn-group system-district-table-operate-btn"
+                                     style="margin-bottom: 10px;float: right">
+                                    <button class="layui-btn" data-type="add">添加区县</button>
+                                </div>
+                                <div class="system-district-table-operate-btn" style="margin-bottom: 10px;">
+                                    省份名称：
+                                    <div class="layui-inline">
+                                        <input class="layui-input" name="name" id="system-district-search-name"
+                                               autocomplete="off">
+                                    </div>
+                                    <button class="layui-btn" data-type="search">搜索</button>
+                                </div>
+                                <table class="layui-hide" id="system-district-table"
+                                       lay-filter="system-district-table"></table>
+
+                                <script type="text/html" id="imgTp2">
+                                    <img style="display: inline-block; width: 40px; height: 30px;" src={{ d.thumb }}>
+                                </script>
+
+                                <script type="text/html" id="system-district-table-bar">
+                                    <div class="layui-btn-group">
+                                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                                    </div>
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+<script>
+    layui.use(['admin', 'table', 'form', 'element'], function () {
+        var admin = layui.admin
+            , table = layui.table
+            , view = layui.view
+            , form = layui.form
+            , element = layui.element;
+
+        form.render('select');
+        element.on('tab', function (data) {
+            if (data.index == 0) {
+                table.reload('system-province-table');
+            }
+            else if (data.index == 1) {
+                table.reload('system-city-table');
+            }
+            else if (data.index == 2) {
+                table.reload('system-district-table');
+            }
+        });
+        table.render({
+            elem: '#system-province-table'
+            , url: '../api/system/province/lists?token=' + layui.data('layuiAdmin').token
+            , toolbar: '#system-province-table-toolbar'
+            , title: '省份信息表'
+            , height: 'full-250'
+            , cols: [[
+                {
+                    field: 'province_id',
+                    title: 'ID',
+                    width: 60,
+                    fixed: 'left',
+                    align: 'center',
+                    unresize: true,
+                    sort: true
+                }
+                , {field: 'province_name', title: '省份名称', edit: 'text'}
+                , {fixed: 'right', title: '操作', toolbar: '#system-province-table-bar', align: 'center', width: 100}
+            ]]
+            , page: true
+            , done: function (res) {
+                if (res.code == layui.setter.response.statusCode.logout) {
+                    layer.alert(res.msg, function (index) {
+                        layer.close(index);
+                        view.exit();
+                    });
+                }
+            }
+        });
+
+        table.render({
+            elem: '#system-city-table'
+            , url: '../api/system/city/lists?token=' + layui.data('layuiAdmin').token
+            , toolbar: '#system-city-table-toolbar'
+            , title: '城市信息表'
+            , height: 'full-250'
+            , cols: [[
+                {
+                    field: 'city_id',
+                    title: 'ID',
+                    width: 60,
+                    fixed: 'left',
+                    align: 'center',
+                    unresize: true,
+                    sort: true
+                }
+                , {field: 'begins', title: '首字母'}
+                , {field: 'city_name', title: '城市名称', edit: 'text'}
+                , {field: 'province_names', title: '所属省份', edit: 'text'}
+                , {field: 'zipcode', title: '邮政编码', edit: 'text',width:90,align:'center'}
+                , {field: 'citycode', title: '地区编码', edit: 'text',width:90,align:'center'}
+                , {
+                    field: 'is_open', title: '是否开通分站', align: 'center', width: 120, templet: function (d) {
+                        return d.is_open == 1 ? '<span style="color: #c00;">开通</span>' : '未开通';
+                    }
+                }
+                , {field: 'listorder', title: '排序', width: 60, align: 'center'}
+                , {fixed: 'right', title: '操作', toolbar: '#system-city-table-bar', align: 'center', width: 100}
+            ]]
+            , page: true
+            , done: function (res) {
+                if (res.code == layui.setter.response.statusCode.logout) {
+                    layer.alert(res.msg, function (index) {
+                        layer.close(index);
+                        view.exit();
+                    });
+                }
+            }
+        });
+
+
+        table.render({
+            elem: '#system-district-table'
+            , url: '../api/system/district/lists?token=' + layui.data('layuiAdmin').token
+            , toolbar: '#system-district-table-toolbar'
+            , title: '区县信息表'
+            , height: 'full-250'
+            , cols: [[
+                {
+                    field: 'district_id',
+                    title: 'ID',
+                    width: 60,
+                    fixed: 'left',
+                    align: 'center',
+                    unresize: true,
+                    sort: true
+                }
+                , {field: 'district_name', title: '区县名称', edit: 'text'}
+                , {field: 'city_names', title: '所属城市', edit: 'text'}
+                , {fixed: 'right', title: '操作', toolbar: '#system-district-table-bar', align: 'center', width: 100}
+            ]]
+            , page: true
+            , done: function (res) {
+                if (res.code == layui.setter.response.statusCode.logout) {
+                    layer.alert(res.msg, function (index) {
+                        layer.close(index);
+                        view.exit();
+                    });
+                }
+            }
+        });
+
+
+        //头工具栏事件
+
+        //监听行工具事件
+        table.on('tool(system-province-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    admin.req({
+                        url: '../api/system/province/delete?token=' + layui.data('layuiAdmin').token,
+                        type: "post",
+                        data: {province_id: data.province_id},
+                        async: false,
+                        done: function (res) {
+                            if (res.status == 0) {
+                                layer.msg(res.msg, {icon: 1, time: 1000});
+                                obj.del();
+                                layer.close(index);
+                            } else {
+                                layer.msg(res.msg, {icon: 2, time: 3000})
+                            }
+                        }
+                    })
+                });
+            } else if (obj.event === 'edit') {
+                admin.popup({
+                    title: '编辑省份'
+                    , area: ['30%', '25%']
+                    , id: 'LAY-popup-system-province-edit'
+                    , success: function (layero, index) {
+                        view(this.id).render('system/region/province-add', data).done(function () {
+                            form.render(null, 'form-system-province');
+                            //监听提交
+                            form.on('submit(form-system-province-submit)', function (formData) {
+                                formData.field['province_id'] = data.province_id;
+                                admin.req({
+                                    url: '../api/system/province/add'
+                                    , data: formData.field
+                                    , async: false
+                                    , type: 'post'
+                                    , done: function (res) {
+                                        if (res.status == 0) {
+                                            parent.layer.closeAll();
+                                            parent.layui.table.reload('system-province-table');
+                                            layer.msg(res.msg, {icon: 1, time: 1000})
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2, time: 3000})
+                                        }
+                                    }
+                                })
+                            });
+                        });
+                    }
+                });
+            }
+        });
+
+        table.on('tool(system-city-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    admin.req({
+                        url: '../api/system/city/delete?token=' + layui.data('layuiAdmin').token,
+                        type: "post",
+                        data: {city_id: data.city_id},
+                        async: false,
+                        done: function (res) {
+                            if (res.status == 0) {
+                                obj.del();
+                                layer.close(index);
+                                layer.msg(res.msg, {icon: 1, time: 1000});
+                            } else {
+                                layer.msg(res.msg, {icon: 2, time: 1000})
+                            }
+                        }
+                    })
+                });
+            } else if (obj.event === 'edit') {
+                admin.popup({
+                    title: '编辑城市'
+                    , area: ['30%', '35%']
+                    , id: 'LAY-popup-system-city-edit'
+                    , success: function (layero, index) {
+                        form.on('switch(is_open)', function (dd) {
+                            dd.elem.checked ? $('#is_open').val(1) : $('#is_open').val(0);
+                        });
+                        view(this.id).render('system/region/city-add', data).done(function () {
+                            form.render(null, 'form-system-city');
+                            //监听提交
+                            form.on('submit(form-system-city-submit)', function (formData) {
+                                formData.field['city_id'] = data.city_id;
+                                admin.req({
+                                    url: '../api/system/city/add'
+                                    , data: formData.field
+                                    , async: false
+                                    , type: 'post'
+                                    , done: function (res) {
+                                        if (res.status == 0) {
+                                            parent.layer.closeAll();
+                                            parent.layui.table.reload('system-city-table');
+                                            layer.msg(res.msg, {icon: 1, time: 1000})
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2, time: 3000})
+                                        }
+                                    }
+                                })
+                            });
+                        });
+                    }
+                });
+            }
+        });
+
+        table.on('tool(system-district-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    admin.req({
+                        url: '../api/system/district/delete?token=' + layui.data('layuiAdmin').token,
+                        type: "post",
+                        data: {district_id: data.district_id},
+                        async: false,
+                        done: function (res) {
+                            if (res.status == 0) {
+                                layer.msg(res.msg, {icon: 1, time: 1000});
+                                obj.del();
+                                layer.close(index);
+                            } else {
+                                layer.msg(res.msg, {icon: 2, time: 3000})
+                            }
+                        }
+                    })
+                });
+            } else if (obj.event === 'edit') {
+                admin.popup({
+                    title: '编辑区县'
+                    , area: ['30%', '35%']
+                    , id: 'LAY-popup-system-district-edit'
+                    , success: function (layero, index) {
+                        view(this.id).render('system/region/district-add', data).done(function () {
+                            form.render(null, 'form-system-district');
+                            //监听提交
+                            form.on('submit(form-system-district-submit)', function (formData) {
+                                formData.field['district_id'] = data.district_id;
+                                admin.req({
+                                    url: '../api/system/district/add'
+                                    , data: formData.field
+                                    , async: false
+                                    , type: 'post'
+                                    , done: function (res) {
+                                        if (res.status == 0) {
+                                            parent.layer.closeAll();
+                                            parent.layui.table.reload('system-district-table');
+                                            layer.msg(res.msg, {icon: 1, time: 1000})
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2, time: 3000})
+                                        }
+                                    }
+                                })
+                            });
+                        });
+                    }
+                });
+            }
+        });
+
+        var $ = layui.$, province_active = {
+            search: function () {
+                //执行重载
+                table.reload('system-province-table', {
+                    url: '../api/system/province/lists?token=' + layui.data('layuiAdmin').token
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        name: $('#system-province-search-name').val()
+                    }
+                });
+            },
+            add: function () { //获取选中数据
+                admin.popup({
+                    title: '添加省份'
+                    , area: ['30%', '25%']
+                    , id: 'LAY-popup-system-province-add'
+                    , success: function (layero, index) {
+                        view(this.id).render('system/region/province-add').done(function () {
+                            form.render();
+                            //监听提交
+                            form.on('submit(form-system-province-submit)', function (formData) {
+                                formData.field['province_id'] = 0;
+                                admin.req({
+                                    url: '../api/system/province/add'
+                                    , data: formData.field
+                                    , async: false
+                                    , type: 'post'
+                                    , done: function (res) {
+                                        if (res.status == 0) {
+                                            parent.layer.closeAll();
+                                            parent.layui.table.reload('system-province-table');
+                                            layer.msg(res.msg, {icon: 1, time: 1000})
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2, time: 3000})
+                                        }
+                                    }
+                                })
+                            });
+                        });
+                    }
+                });
+            }
+        };
+        var city_active = {
+            search: function () {
+                //执行重载
+                table.reload('system-city-table', {
+                    url: '../api/system/city/lists?token=' + layui.data('layuiAdmin').token
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        name: $('#system-city-search-name').val(),
+                        open: $('#system-city-search-open').val()
+                    }
+                });
+            },
+            add: function () { //获取选中数据
+                admin.popup({
+                    title: '添加城市'
+                    , area: ['30%', '50%']
+                    , id: 'LAY-popup-system-city-add'
+                    , success: function (layero, index) {
+                        view(this.id).render('system/region/city-add').done(function () {
+                            form.render();
+                            //监听提交
+                            form.on('submit(form-system-city-submit)', function (formData) {
+                                formData.field['city_id'] = 0;
+                                admin.req({
+                                    url: '../api/system/city/add'
+                                    , data: formData.field
+                                    , async: false
+                                    , type: 'post'
+                                    , done: function (res) {
+                                        if (res.status == 0) {
+                                            parent.layer.closeAll();
+                                            parent.layui.table.reload('system-city-table');
+                                            layer.msg(res.msg, {icon: 1, time: 1000})
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2, time: 3000})
+                                        }
+                                    }
+                                })
+                            });
+                        });
+                    }
+                });
+            }
+        };
+        var district_active = {
+            search: function () {
+                //执行重载
+                table.reload('system-district-table', {
+                    url: '../api/system/district/lists?token=' + layui.data('layuiAdmin').token
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        name: $('#system-district-search-name').val()
+                    }
+                });
+            },
+            add: function () { //获取选中数据
+                admin.popup({
+                    title: '添加区县'
+                    , area: ['30%', '35%']
+                    , id: 'LAY-popup-system-district-add'
+                    , success: function (layero, index) {
+                        view(this.id).render('system/region/district-add').done(function () {
+                            form.render();
+                            //监听提交
+                            form.on('submit(form-system-district-submit)', function (formData) {
+                                formData.field['district_id'] = 0;
+                                admin.req({
+                                    url: '../api/system/district/add'
+                                    , data: formData.field
+                                    , async: false
+                                    , type: 'post'
+                                    , done: function (res) {
+                                        if (res.status == 0) {
+                                            parent.layer.closeAll();
+                                            parent.layui.table.reload('system-district-table');
+                                            layer.msg(res.msg, {icon: 1, time: 1000})
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2, time: 3000})
+                                        }
+                                    }
+                                })
+                            });
+                        });
+                    }
+                });
+            }
+        };
+
+
+        $('.system-province-table-operate-btn .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            province_active[type] ? province_active[type].call(this) : '';
+        });
+        $('.system-city-table-operate-btn .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            city_active[type] ? city_active[type].call(this) : '';
+        });
+        $('.system-district-table-operate-btn .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            district_active[type] ? district_active[type].call(this) : '';
+        });
+    });
+
+</script>
+
+
+
+
+

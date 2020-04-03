@@ -1,0 +1,56 @@
+.text-right{
+    text-align: right !important;
+}
+.text-center{
+    text-align: right !important;
+}
+.pull-left{
+    float: left;
+    display: inline;
+}
+.pull-right{
+    float: right;
+    display: inline;
+}
+.m0{
+    margin:0 !important;
+}
+.mt0{
+    margin-top: 0 !important;
+}
+.p0{
+    padding: 0 !important;
+}
+.separate{
+    border-style: dotted;
+}
+
+/**
+*order info
+ */
+.state-title{
+    float: left;width: 100%;line-height: 40px;font-size:14px;
+    padding-left: 40px;-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+}
+.state-title .layui-icon{
+    position: absolute;
+    left: 0;
+    top: 5px;
+}
+.state-action{
+    float: left;width: 100%;
+    padding-left: 40px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.state-tips{
+    float: left;width: 100%;
+    margin-top:15px;line-height: 30px;padding-left: 40px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}

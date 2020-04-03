@@ -1,0 +1,110 @@
+<title>设置我的资料</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>设置</cite></a>
+        <a><cite>我的资料</cite></a>
+    </div>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">设置我的资料</div>
+                <div class="layui-card-body" pad15>
+
+                    <div class="layui-form" lay-filter="form-user-profile">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">邮箱</label>
+                            <div class="layui-input-inline" style="width: 300px;">
+                                <input type="text" name="user_email" value="" lay-verify="email" autocomplete="off"
+                                       class="layui-input"
+                                       readonly>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">不可修改，用于后台登入名</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">手机</label>
+                            <div class="layui-input-inline" style="width: 300px;">
+                                <input type="text" name="phone" value="" lay-verify="phone" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-inline" style="width: 300px;">
+                                <input type="text" name="name" value="" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">我的角色</label>
+                            <div id="form-user-profile-roles" class="layui-input-inline" style="width: 300px;">
+
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">不可修改</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">用户头像</label>
+                            <div class="layui-input-block">
+                                <script type="text/html" template lay-done="layui.data.doneUpload(d);">
+                                    <div class="layui-input-inline">
+                                        <input name="avatar" lay-verify="required" id="thumb" placeholder="头像"
+                                               value="{{ d.params.avatar || '' }}" class="layui-input">
+                                    </div>
+                                    <div class="layui-input-inline layui-btn-container" style="width: auto;">
+                                        <button type="button" class="layui-btn layui-btn-primary LAY_Upload"
+                                                lay-data="{type:'normal',pic:'qiniu_url','id':'thumb'}">
+                                            <i class="layui-icon">&#xe67c;</i>上传图片
+                                        </button>
+                                        <button class="layui-btn layui-btn-primary" layadmin-event="Preview"
+                                                data-id="thumb">查看图片
+                                        </button>
+                                    </div>
+                                </script>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="setmyinfo">确认修改</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use('set', layui.factory('set'));
+
+    layui.use(['admin', 'form', 'upload', 'laytpl',], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , router = layui.router()
+            , view = layui.view
+            , form = layui.form
+            , laytpl = layui.laytpl
+            , upload = layui.upload;
+
+        admin.req({
+            url: '../api/user/profile'
+            , success: function (result) {
+                var roles_html = '';
+                $.each(result.data.roles, function (index, item) {
+                    roles_html += '<input type="checkbox" title="' + item.display_name + '" checked disabled>';
+                });
+                $("#form-user-profile-roles").html(roles_html);
+
+                form.val('form-user-profile', result.data);
+            }
+        });
+    });
+    layui.data.doneUpload = function (d) {
+        layui.use('uploadCfg', layui.factory('uploadCfg'));
+    };
+</script>

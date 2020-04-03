@@ -1,0 +1,135 @@
+<div class="layui-form" action="" lay-filter="form-permission">
+  <div class="layui-form-item">
+    <label class="layui-form-label">所属后台</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="type[]" value="1" title="平台" lay-filter="type" checked>
+<!--      <input type="checkbox" name="type[]" value="2" title="门店" lay-filter="type">-->
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">父级菜单</label>
+      <div class="layui-input-block">
+        <select id="form-permission-fid" name="fid" lay-verify="fid">
+          <option value="0">顶级菜单</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <label class="layui-form-label">是否菜单</label>
+      <div class="layui-input-block">
+        <input type="checkbox" name="is_menu" value="1" lay-skin="switch" lay-filter="is_menu"
+               lay-text="是|否">
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">权限名称</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <input type="text" name="display_name" lay-verify="required" lay-filter="display_name" autocomplete="off"
+               placeholder="请输入权限名称" class="layui-input" value="{{ d.params.display_name || '' }}">
+      </script>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">路由名称</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <input type="text" name="name" lay-verify="required" lay-filter="name" autocomplete="off"
+               placeholder="请输入路由名称，示例：admin.permissions.index，如为栏目请填#"
+               class="layui-input" value="{{ d.params.name || '' }}">
+      </script>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">资源URI</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <input type="text" name="uri" lay-verify="" lay-filter="" autocomplete="off"
+               placeholder="请输入资源名称，示例：home/index，如为栏目请留空"
+               class="layui-input" value="{{ d.params.uri || '' }}">
+      </script>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">ICON</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <input type="text" name="icon" lay-verify="" lay-filter="" autocomplete="off"
+               placeholder="请输入ICON，示例：layui-icon-rate"
+               class="layui-input" value="{{ d.params.icon || '' }}">
+      </script>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">资源说明</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <textarea name="description" placeholder="请输入内容" lay-filter="description"
+                  class="layui-textarea">{{ d.params.description || '' }}</textarea>
+      </script>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">排序值</label>
+      <div class="layui-input-block">
+        <script type="text/html" template>
+          <input type="text" name="sort" lay-verify="number" lay-filter="sort"
+                 placeholder="请输入数字，值越小越靠前" class="layui-input" value="{{ d.params.sort || '9999' }}">
+        </script>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <label class="layui-form-label">是否禁用</label>
+      <div class="layui-input-block">
+        <input type="checkbox" name="disabled" value="1" lay-skin="switch" lay-filter="disabled"
+               lay-text="是|否">
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <div class="layui-footer">
+        <button class="layui-btn" lay-submit="" lay-filter="form-permission-submit">立即提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    layui.use(['admin', 'form', 'layer'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , layer = layui.layer
+            , form = layui.form;
+
+        /* 自定义验证规则 */
+        form.verify({
+            display_name: function (value) {
+                if (value.length < 2) {
+                    return '权限名至少得2个字';
+                }
+            },
+            name: function (value) {
+                if (value.length < 1) {
+                    return '路由名称不能为空';
+                }
+            }
+        });
+
+        /* 监听指定开关 */
+        form.on('switch(is_menu)', function (data) {
+            layer.tips('温馨提示：是表示为菜单资源，否表示不是菜单资源', data.othis)
+        });
+
+        form.on('switch(disabled)', function (data) {
+            layer.tips('温馨提示：是表示禁用资源，否表示资源可用', data.othis)
+        });
+
+    });
+</script>

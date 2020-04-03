@@ -1,0 +1,107 @@
+<title>后台管理员</title>
+
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>用户</cite></a>
+    <a><cite>后台管理员</cite></a>
+  </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="layadmin-useradmin-formlist">
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">登录名</label>
+          <div class="layui-input-block">
+            <input type="text" name="loginname" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">手机</label>
+          <div class="layui-input-block">
+            <input type="text" name="telphone" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">邮箱</label>
+          <div class="layui-input-block">
+            <input type="text" name="email" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">角色</label>
+          <div class="layui-input-block">
+            <select name="role">
+              <option value="1">管理员</option>
+              <option value="2">门店管理员</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-inline">
+          <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search">
+            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+          </button>
+        </div>
+        <div style="padding-bottom: 10px;float: right;">
+          <!--<button class="layui-btn layuiadmin-btn-admin" data-type="batchdel">删除</button>-->
+          <button class="layui-btn layuiadmin-btn-admin" data-type="add">添加</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-card-body">
+
+      <table id="LAY-user-back-manage" lay-filter="LAY-user-back-manage"></table>
+
+      <script type="text/html" id="buttonTpl">
+        {{#  if(d.check == true){ }}
+        <button class="layui-btn layui-btn-xs">禁用</button>
+        {{#  } else { }}
+        <button class="layui-btn layui-btn-primary layui-btn-xs">启用</button>
+        {{#  } }}
+      </script>
+      <script type="text/html" id="table-useradmin-admin">
+        <div class="layui-btn-group">
+          <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+              class="layui-icon layui-icon-edit"></i>编辑</a>
+          {{# if(d.id == 1){ }}
+          <a class="layui-btn layui-btn-disabled layui-btn-xs"><i class="layui-icon layui-icon-delete"></i>删除</a>
+          {{# } else { }}
+          <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+              class="layui-icon layui-icon-delete"></i>删除</a>
+          {{# } }}
+        </div>
+      </script>
+    </div>
+  </div>
+</div>
+
+<script>
+    layui.use('useradmin', layui.factory('useradmin')).use(['admin', 'useradmin', 'table'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , useradmin = layui.useradmin
+            , view = layui.view
+            , table = layui.table
+            , form = layui.form;
+
+        form.render(null, 'layadmin-useradmin-formlist');
+
+        //监听搜索
+        form.on('submit(LAY-user-back-search)', function (data) {
+            var field = data.field;
+
+            //执行重载
+            table.reload('LAY-user-back-manage', {
+                where: field
+            });
+        });
+
+        $('.layui-btn.layuiadmin-btn-admin').on('click', function () {
+            var type = $(this).data('type');
+            useradmin.admin.actives[type] ? useradmin.admin.actives[type].call(this) : '';
+        });
+    });
+</script>

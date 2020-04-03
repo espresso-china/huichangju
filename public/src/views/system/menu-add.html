@@ -1,0 +1,105 @@
+<div class="layui-form" action="" lay-filter="form-menu">
+
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="name" lay-verify="required" lay-filter="name" autocomplete="off"
+                       placeholder="请输入导航名称" class="layui-input" value="{{ d.params.name || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">图标</label>
+        <div class="layui-input-block">
+            <script type="text/html" template lay-done="layui.data.doneUpload(d);">
+                <div class="layui-input-inline">
+                    <input name="thumb" lay-verify="required" id="thumb" placeholder="图片地址"
+                           value="{{ d.params.thumb || '' }}" class="layui-input">
+                </div>
+                <div class="layui-input-inline layui-btn-container" style="width: auto;">
+                    <button type="button" class="layui-btn layui-btn-primary LAY_Upload"
+                            lay-data="{type:'normal',pic:'qiniu_url','id':'thumb'}">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </button>
+                    <button class="layui-btn layui-btn-primary" layadmin-event="Preview" data-id="thumb">查看图片</button>
+                </div>
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">跳转地址</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="url" autocomplete="off"
+                       placeholder="请输入跳转地址" class="layui-input" value="{{ d.params.url || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <script type="text/html" template>
+                    <input type="text" name="listorder" lay-verify="number" lay-filter="listorder"
+                           placeholder="请输入数字，值越小越靠前" class="layui-input" value="{{ d.params.listorder || '9999' }}">
+                </script>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <script type="text/html" template>
+                    <input type="checkbox" name="status" value="{{ d.params.status || 1 }}" id="status" {{#
+                           if(d.params.status== 1) { }}
+                           checked{{# } }}
+                           lay-skin="switch" lay-filter="status"
+                           lay-text="启用|禁用">
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">版本</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="radio" name="version" value="1" title="版本1.0" lay-verify="required"
+                       {{ d.params.version==1?'checked':'' }}>
+                <input type="radio" name="version" value="2" title="版本2.0" lay-verify="required"
+                       {{ d.params.version==2?'checked':'' }}>
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="layui-footer">
+                <button class="layui-btn" lay-submit="" lay-filter="form-menu-submit">立即提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'form', 'layer'], function () {
+        var layer = layui.layer
+            , form = layui.form;
+
+        /* 自定义验证规则 */
+        form.verify({
+            name: function (value) {
+                if (value.length < 1) {
+                    return '名称不能为空';
+                }
+            }
+        });
+
+        /* 监听指定开关 */
+        form.on('switch(status)', function (data) {
+            layer.tips('温馨提示：启用表示可用，禁用表示资源不可用', data.othis)
+        });
+    });
+    layui.data.doneUpload = function (d) {
+        layui.use('uploadCfg', layui.factory('uploadCfg'));
+    };
+</script>

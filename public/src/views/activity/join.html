@@ -1,0 +1,109 @@
+<title>报名列表</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>内容</cite></a>
+        <a><cite>报名列表</cite></a>
+    </div>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">报名列表</div>
+                <div class="layui-card-body">
+                    <div class="activity-join-table-reload-btn" style="margin-bottom: 10px;">
+                        报名者昵称：
+                        <div class="layui-inline">
+                            <input class="layui-input" name="name" id="activity-join-search-name" autocomplete="off"
+                                   placeholder="请输入联系人昵称">
+                        </div>
+                        手机号码：
+                        <div class="layui-inline">
+                            <input class="layui-input" name="phone" id="activity-join-search-phone" autocomplete="off"
+                                   placeholder="请输入手机号码">
+                        </div>
+                        <button class="layui-btn" data-type="search">搜索</button>
+                    </div>
+                    <table class="layui-hide" id="activity-join-table" lay-filter="activity-join-table"></table>
+
+                    <script type="text/html" id="imgTpl">
+                        <img style="display: inline-block; width: 40px; height: 30px;" src={{ d.thumb }}>
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'form'], function () {
+        var table = layui.table
+            , view = layui.view;
+
+
+        table.render({
+            elem: '#activity-join-table'
+            , url: '../api/news/activity/join?token=' + layui.data('layuiAdmin').token
+            , toolbar: '#activity-join-table-toolbar'
+            , title: '报名表'
+            , height: 'full-250'
+            , cols: [[
+                {field: 'activity_title', title: '活动标题', edit: 'text'}
+                , {field: 'contacts', title: '联系人', edit: 'text', width: 100, align: 'center'}
+                , {field: 'phone', title: '联系人电话', edit: 'text', width: 120, align: 'center'}
+                , {field: 'number', title: '参与人数', edit: 'text', width: 90, align: 'center'}
+                , {field: 'member_name', title: '报名者昵称', edit: 'text', width: 180, align: 'center'}
+                , {field: 'create_time', title: '报名时间', width: 170, align: 'center'}
+            ]]
+            , page: true
+            , done: function (res) {
+                if (res.code == layui.setter.response.statusCode.logout) {
+                    layer.alert(res.msg, function (index) {
+                        layer.close(index);
+                        view.exit();
+                    });
+                }
+            }
+        });
+
+        //头工具栏事件
+
+
+        //监听行工具事件
+
+
+        var $ = layui.$, active = {
+            search: function () {
+                //执行重载
+                table.reload('activity-join-table', {
+                    url:
+                        '../api/news/activity/join?token=' + layui.data('layuiAdmin').token
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,
+                    where: {
+                        name: $('#activity-join-search-name').val()
+                        , phone: $('#activity-join-search-phone').val()
+                    }
+                })
+                ;
+            }
+        };
+
+        $('.activity-join-table-reload-btn .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+</script>
+
+
+
+
+

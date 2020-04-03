@@ -1,0 +1,277 @@
+<title>资讯信息</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>内容</cite></a>
+        <a><cite>资讯信息</cite></a>
+    </div>
+</div>
+
+<div class="layui-form layui-fluid" lay-filter="form-news" id="form-news">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">资讯信息</div>
+                <div class="layui-card-body">
+                    <div class="layui-form-item layui-col-md11">
+                        <label class="layui-form-label">标题</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="title" lay-verify="required" lay-filter="title"
+                                       autocomplete="off"
+                                       placeholder="请输入标题" class="layui-input" value="{{ d.params.title || '' }}">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-col-md11">
+                        <label class="layui-form-label">作者</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="editor"
+                                       autocomplete="off"
+                                       placeholder="请输入作者姓名" class="layui-input" value="{{ d.params.editor || '' }}">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-col-md11">
+                        <label class="layui-form-label">作者头像</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template lay-done="layui.data.doneUpload(d);">
+                                <div class="layui-input-inline">
+                                    <input name="avatar" lay-verify="required" id="avatar" placeholder="作者头像"
+                                           value="{{ d.params.avatar || '' }}" class="layui-input">
+                                </div>
+                                <div class="layui-input-inline layui-btn-container" style="width: auto;">
+                                    <button type="button" class="layui-btn layui-btn-primary LAY_Upload"
+                                            lay-data="{type:'news',pic:'qiniu_url','id':'avatar'}">
+                                        <i class="layui-icon">&#xe67c;</i>上传头像
+                                    </button>
+                                    <button class="layui-btn layui-btn-primary" layadmin-event="Preview"
+                                            data-id="avatar">查看头像
+                                    </button>
+                                </div>
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-col-md11">
+                        <label class="layui-form-label">资讯封面</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template lay-done="layui.data.doneUpload(d);">
+                                <div class="layui-input-inline">
+                                    <input name="thumb" lay-verify="required" id="thumb" placeholder="资讯封面"
+                                           value="{{ d.params.thumb || '' }}" class="layui-input">
+                                </div>
+                                <div class="layui-input-inline layui-btn-container" style="width: auto;">
+                                    <button type="button" class="layui-btn layui-btn-primary LAY_Upload"
+                                            lay-data="{type:'news',pic:'qiniu_url','id':'thumb'}">
+                                        <i class="layui-icon">&#xe67c;</i>上传图片
+                                    </button>
+                                    <button class="layui-btn layui-btn-primary" layadmin-event="Preview"
+                                            data-id="thumb">查看图片
+                                    </button>
+                                </div>
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-col-md11">
+                        <label class="layui-form-label">描述</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <textarea name="description" placeholder="请输入描述" lay-filter="description"
+                                          class="layui-textarea">{{ d.params.description || '' }}</textarea>
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">资讯分类</label>
+                        <div class="layui-col-md6">
+                            <script type="text/html" template>
+                                <select name="classify_id" lay-verify="required"
+                                        data-value="{{ d.params.classify_id || '' }}"
+                                        lay-search="true" id="classify_select"></select>
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">内容</label>
+                        <div class="layui-input-block">
+                            <textarea name="content" id="content" cols="30" rows="10" class="layui-textarea"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-col-md11">
+                        <label class="layui-form-label">链接</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="url" lay-filter="url" autocomplete="off"
+                                       placeholder="请输入链接(可选)" class="layui-input" value="{{ d.params.url || '' }}">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">排序值</label>
+                            <div class="layui-input-block">
+                                <script type="text/html" template>
+                                    <input type="text" name="listorder" lay-verify="number" lay-filter="listorder"
+                                           placeholder="请输入数字，值越小越靠前" class="layui-input"
+                                           value="{{ d.params.listorder || '9999' }}">
+                                </script>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">是否置顶</label>
+                            <div class="layui-input-block">
+                                <script type="text/html" template>
+                                    <input type="checkbox" name="sort" value="{{ d.params.sort || 1 }}" {{#
+                                           if(d.params.sort== 1) { }}
+                                           checked{{# } }} id="sort"
+                                           lay-skin="switch" lay-filter="sort"
+                                           lay-text="是|否">
+                                </script>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">是否启用</label>
+                            <div class="layui-input-block">
+                                <script type="text/html" template>
+                                    <input type="checkbox" name="status" value="{{ d.params.status || 1 }}" {{#
+                                           if(d.params.status== 1) { }}
+                                           checked{{# } }} id="status"
+                                           lay-skin="switch" lay-filter="status"
+                                           lay-text="是|否">
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="layui-footer">
+                <button class="layui-btn" lay-submit="" lay-filter="form-news-submit">立即提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    layui.use(['admin', 'form', 'layer', 'layedit'], function () {
+
+        var $ = layui.$
+            , admin = layui.admin
+            , layer = layui.layer
+            , form = layui.form
+            , layedit = layui.layedit
+            , router = layui.router();
+
+        var classify_id;
+
+        if (router.search.id) {
+            admin.req({
+                url: '../api/news/info',
+                data: {
+                    id: router.search.id
+                }
+                , done: function (res) {
+                    if (res.code === 0) {
+                        form.val('form-news', res.data);
+                        layui.data.doneEdit(res.data.content);
+                        form.render()
+                        classify_id = res.data.classify_id;
+                    }
+                }
+            });
+        } else {
+            layui.data.doneEdit();
+            form.render()
+        }
+        admin.req({
+            url: '../api/news/classify',
+            done: function (res) {
+                var html = '<option value="">请选择资讯分类</option>', selected = '';
+                $.each(res.data, function (index, item) {
+                    if (item.id == classify_id) {
+                        selected = 'selected';
+                    }
+                    html += '<option value="' + item.id + '"  ' + selected + '>' + item.title + '</option>';
+                });
+                $('#classify_select').html(html);
+                form.render('select');
+            }, error: function () {
+                alert('查询失败！！！')
+            }
+        });
+
+
+        //监听提交
+        form.on('submit(form-news-submit)', function (formData) {
+            formData.field['id'] = router.search.id ? router.search.id : 0;
+            admin.req({
+                url: '../api/news/add'
+                , data: formData.field
+                , async: false
+                , type: 'post'
+                , done: function (res) {
+                    if (res.status == 0) {
+                        //  location.hash = '/news/list';
+                        layer.msg(res.msg, {icon: 1, time: 1000})
+                    } else {
+                        layer.msg(res.msg, {icon: 2, time: 1000})
+                    }
+                }
+            })
+        });
+        form.on('switch(sort)', function (data) {
+            layer.tips('温馨提示：是表示置顶，否表示不置顶', data.othis)
+        });
+        form.on('switch(status)', function (data) {
+            layer.tips('温馨提示：是表示启用，否表示禁用', data.othis)
+        });
+
+    });
+    layui.data.doneUpload = function (d) {
+        layui.use('uploadCfg', layui.factory('uploadCfg'));
+    };
+    layui.data.doneEdit = function (data) {
+        layui.use(['form', 'layedit'], function () {
+            var $ = layui.jquery
+                , layer = layui.layer
+                , form = layui.form
+                , layedit = layui.layedit;
+            $('#content').val(data);
+            layedit.set({
+                uploadImage: {
+                    url: '../api/upload/image-save?token=' + layui.data('layuiAdmin').token,
+                    accept: 'image',
+                    acceptMime: 'image/*',
+                    exts: 'jpg|png|gif|bmp|jpeg',
+                    size: 1024 * 10,
+                    done: function (data) {
+
+                    }
+                }
+                , autoSync: true
+                , devmode: true
+                , tool: [
+                    'redo', 'strong', 'italic', 'underline', 'del', 'addhr', '|', 'fontFomatt', 'fontfamily', 'fontSize', 'fontBackColor', 'colorpicker', 'face'
+                    , '|', 'left', 'center', 'right', '|', 'link', 'unlink', 'images', 'image_alt', 'anchors'
+                    , '|'
+                    , 'table'
+                ]
+                , height: '800px'
+            });
+            function editor (){
+                var ind =layedit.build('content')
+            }
+            setTimeout(editor(),3000);
+        });
+    };
+</script>

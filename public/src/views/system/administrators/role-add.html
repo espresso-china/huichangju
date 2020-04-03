@@ -1,0 +1,181 @@
+<div class="layui-form" action="" lay-filter="layuiadmin-form-role">
+
+  <div class="layui-tab">
+    <ul class="layui-tab-title">
+      <li class="layui-this">基本信息</li>
+      <li>权限设置</li>
+    </ul>
+    <div class="layui-tab-content">
+
+      <div class="layui-form-item" id="admin_role_type">
+        <label class="layui-form-label">所属后台</label>
+        <div class="layui-input-block">
+          <input type="radio" name="type" value="1" title="平台" lay-filter="role_type">
+          <input type="radio" name="type" value="2" title="商家" lay-filter="role_type">
+        </div>
+      </div>
+
+      <div class="layui-tab-item layui-show">
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">角色名称</label>
+          <div class="layui-input-block">
+            <script type="text/html" template>
+              <input type="text" name="display_name" lay-verify="display_name" autocomplete="off"
+                     placeholder="请输入角色名称" class="layui-input" value="{{ d.params.display_name || ''}}">
+            </script>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">角色标志</label>
+          <div class="layui-input-block">
+            <input type="text" id="form_role_name" name="name" lay-verify="name" autocomplete="off"
+                   placeholder="请输入角色标志，示例：admin" class="layui-input" value="">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">角色说明</label>
+          <div class="layui-input-block">
+            <script type="text/html" template>
+              <textarea name="description" placeholder="请输入内容" lay-filter="description"
+                        class="layui-textarea"> {{ d.params.description || ''}} </textarea>
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-tab-item">
+        <!--权限信息-->
+        <table id="role_permission_table" class="layui-table" lay-skin="line">
+          <colgroup>
+            <col width="100">
+            <col>
+          </colgroup>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <div class="layui-footer">
+        <button class="layui-btn" lay-submit="" lay-filter="role-save">立即提交</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="text/html" template lay-done="layui.data.initPage(d.params);">
+</script>
+
+
+<script>
+
+    layui.data.initPage = function (roleInfo) {
+
+        layui.use(['admin', 'form', 'layer'], function () {
+            var $ = layui.$
+                , admin = layui.admin
+                , element = layui.element
+                , layer = layui.layer
+                , form = layui.form;
+
+            if (roleInfo.name) {
+                let role_names = roleInfo.name.split(':');
+                let role_name = role_names.length > 1 ? role_names[1] : role_names[0]
+                $("#form_role_name").val(role_name);
+            }
+
+            var role_id = roleInfo.id || 0;
+            var role_type = roleInfo.type || 1;
+
+            var user = layui.data('layuiAdmin').user;
+
+            //当前商家增加时隐藏选择
+            if (user.type == 2) {
+                $("#admin_role_type").hide();
+                role_type = user.type;
+            }
+
+            $("input[name=type][value=" + role_type + "]").attr('checked', true);
+
+            form.render(null, 'layuiadmin-form-role');
+
+            /* 自定义验证规则 */
+            form.verify({
+                title: function (value) {
+                    if (value.length < 2) {
+                        return '角色名至少得2个字啊';
+                    }
+                }
+            });
+
+            form.on('radio(role_type)', function (data) {
+                role_type = data.value;
+                loadPermissions();
+            });
+
+
+            var loadPermissions = function () {
+                admin.req({
+                    url: '../api/permissions/allPermission'
+                    , data: {id: role_id, type: role_type}
+                    , type: 'post'
+                    , async: false
+                    , done: function (res) {
+                        if (res.code == 0) {
+                            var html = '';
+                            $.each(res.data.permissions, function (index, item) {
+                                var checked = $.inArray(item.id, res.data.has) >= 0 ? 'checked' : '';
+                                html += '<tr>\n' +
+                                    '      <td>\n' +
+                                    '       <input type="checkbox" name="permission[]" value="' + item.id + '" title="' + item.display_name + '"' + checked + '>' +
+                                    '      </td>\n' +
+                                    '      <td>\n';
+                                $.each(item.sub_permission, function (index, subitem) {
+                                    if ($.inArray(role_type.toString(), subitem.type.split(',')) != -1) {
+                                        var checked = $.inArray(subitem.id, res.data.has) >= 0 ? 'checked' : '';
+                                        if (subitem.sub_permission.length > 0) {
+                                            html += '<table class="layui-table" lay-size="sm" lay-skin="nob">' +
+                                                '     <colgroup>\n' +
+                                                '         <col width="100">\n' +
+                                                '          <col>\n' +
+                                                '     </colgroup>';
+                                            html += '<tr><td>';
+                                            html += '<input type="checkbox" name="permission[]" value="' + subitem.id + '" title="' + subitem.display_name + '"' + checked + '>';
+                                            html += '</td><td>';
+                                            $.each(subitem.sub_permission, function (index, child) {
+                                                if ($.inArray(role_type.toString(), child.type.split(',')) != -1) {
+                                                    var checked = $.inArray(child.id, res.data.has) >= 0 ? 'checked' : '';
+                                                    html += '<input type="checkbox" name="permission[]" value="' + child.id + '" title="' + child.display_name + '"' + checked + '>';
+                                                }
+                                            });
+                                            html += '</td></tr></table>';
+                                        } else {
+                                            html += '<input type="checkbox" name="permission[]" value="' + subitem.id + '" title="' + subitem.display_name + '" ' + checked + '>';
+                                        }
+                                    }
+                                });
+                                html += '  </td> </tr>';
+                            })
+                            $('#role_permission_table').html(html)
+                        } else {
+                            layer.msg('权限获取失败', {
+                                offset: '15px'
+                                , icon: 2
+                                , time: 1000
+                            });
+                        }
+
+                        form.render(null, 'layuiadmin-form-role');
+                    }
+                })
+            }
+
+            loadPermissions();
+        });
+
+    }
+</script>

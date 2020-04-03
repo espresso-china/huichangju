@@ -1,0 +1,150 @@
+<title>控制台</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>控制台</cite></a>
+    </div>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    总金额
+                    <span class="layui-badge layui-bg-orange layuiadmin-badge">今</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font" id="today_order_money">0</p>
+                    <p>
+                        今日订单总金额
+                        <span class="layuiadmin-span-color">  <i class="layui-icon">&#xe65e;</i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    商品数
+                    <span class="layui-badge layui-bg-blue layuiadmin-badge">总</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font" id="goods_total">0</p>
+                    <p>
+                        商品总数
+                        <span class="layuiadmin-span-color"> <i class="layui-icon">&#xe650;</i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    订单
+                    <span class="layui-badge layui-bg-green layuiadmin-badge">月</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font" id="current_month_order_total">0</p>
+                    <p>
+                        本月订单总数（笔）
+                        <span class="layuiadmin-span-color"> <i class="layui-icon">&#xe770;</i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    交易
+                    <span class="layui-badge layui-bg-green layuiadmin-badge">月</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+
+                    <p class="layuiadmin-big-font" id="current_month_order_success_total">0</p>
+                    <p>
+                        本月已完成交易（笔）
+                        <span class="layuiadmin-span-color">  <i class="layui-icon">&#xe770;</i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md7">
+            <div class="layui-card">
+                <div class="layui-card-header">待处理</div>
+                <div class="layui-card-body">
+                    <ul class="layui-row layui-col-space10">
+                        <li class="layui-col-xs6 layui-col-sm2 ">
+                            <a lay-href="order/shop-order-list/review_status=0" class="layadmin-backlog-body">
+                                <h3>待评论</h3>
+                                <p><cite id="wait_reply_order_total">0</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-xs6 layui-col-sm2">
+                            <a lay-href="order/shop-order-list/order_status=0" class="layadmin-backlog-body">
+                                <h3>待付款</h3>
+                                <p><cite id="wait_pay_order_total">0</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-xs6 layui-col-sm2">
+                            <a lay-href="order/shop-order-list/order_status=1" class="layadmin-backlog-body">
+                                <h3>待发货</h3>
+                                <p><cite id="wait_express_order_total">0</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-xs6 layui-col-sm2">
+                            <a lay-href="order/shop-order-list/order_status=3" class="layadmin-backlog-body">
+                                <h3>待完成</h3>
+                                <p><cite id="wait_complete_order_total">0</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-xs6 layui-col-sm2">
+                            <a lay-href="goods/shop-goods-list/alarm=1" class="layadmin-backlog-body">
+                                <h3>库存预警商品</h3>
+                                <p><cite id="stock_alarm_goods_total">0</cite></p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md5">
+            <div class="layui-card">
+                <div class="layui-card-header">统计</div>
+                <div class="layui-card-body">
+                    <ul class="layui-row layui-col-space10">
+                        <li class="layui-col-xs6">
+                            <a href="javascript:;" class="layadmin-backlog-body">
+                                <h3>昨日</h3>
+                                <p>
+                                    <cite style="color: #FF5722;"><label id="yesterday_order_goods_total">0</label>
+                                        件</cite>
+                                    (<label id="yesterday_order_goods_money">0</label> 元)
+                                </p>
+                            </a>
+                        </li>
+                        <li class="layui-col-xs6">
+                            <a href="javascript:;" class="layadmin-backlog-body">
+                                <h3>本月</h3>
+                                <p>
+                                    <cite style="color: #FF5722;"><label id="current_month_order_goods_total">0</label>
+                                        件</cite>
+                                    (<label id="current_month_order_goods_money">0</label> 元)
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+  //  layui.use('dashboard', layui.factory('dashboard'));
+</script>

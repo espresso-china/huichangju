@@ -1,0 +1,36 @@
+<div class="layui-form" action="" lay-filter="form-system-province" id="form-system-province">
+    <div class="layui-form-item layui-col-md11">
+        <label class="layui-form-label">省份名称</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="province_name" lay-verify="required" lay-filter="province_name"
+                       autocomplete="off"
+                       placeholder="请输入省份名称" class="layui-input" value="{{ d.params.province_name || '' }}">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="layui-footer">
+                <button class="layui-btn" type="button" lay-submit="" lay-filter="form-system-province-submit">立即提交
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    layui.use('form', function () {
+        var form = layui.form;
+        form.render();
+        /* 自定义验证规则 */
+
+
+        /* 监听指定开关 */
+
+
+    });
+
+
+</script>

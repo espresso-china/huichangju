@@ -1,0 +1,122 @@
+<style>
+  pre {
+    outline: 1px solid #EEEEEE;
+    padding: 5px;
+    margin: 5px;
+  }
+
+  .string {
+    color: green;
+  }
+
+  /*字符串的样式*/
+  .number {
+    color: darkorange;
+  }
+
+  /*数字的样式*/
+  .boolean {
+    color: blue;
+  }
+
+  /*布尔型数据的样式*/
+  .null {
+    color: magenta;
+  }
+
+  /*null值的样式*/
+  .key {
+    color: red;
+  }
+
+  /*key值的样式*/
+</style>
+
+<script type="text/html" template lay-done="layui.data.initPage(d.params)">
+  <table class="layui-table " lay-skin="line">
+    <colgroup>
+      <col width="100">
+      <col>
+    </colgroup>
+    <tbody>
+    <tr>
+      <td align="right">类型</td>
+      <td>{{ d.params.notice_type_name }}</td>
+    </tr>
+    <tr>
+      <td align="right">接收方</td>
+      <td>{{ d.params.to_uid }}</td>
+    </tr>
+    <tr>
+      <td align="right">发送方式</td>
+      <td>{{ d.params.notice_method }}</td>
+    </tr>
+    <tr>
+      <td align="right">状态</td>
+      <td>{{ d.params.is_enable==1?'启用':'禁用' }}</td>
+    </tr>
+    <tr>
+      <td align="right">发送状态</td>
+      <td>{{ d.params.status_name }}</td>
+    </tr>
+    <tr>
+      <td align="right">内容模版</td>
+      <td>{{ d.params.notice_message }}</td>
+    </tr>
+    <tr>
+      <td align="right">模版参数</td>
+      <td>
+        <pre id="template_params"></pre>
+      </td>
+    </tr>
+    <tr>
+      <td align="right">创建日期</td>
+      <td>{{ d.params.create_time}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+</script>
+
+
+<script>
+    layui.data.initPage = function (noticeInfo) {
+
+        function syntaxHighlight(json) {
+            if (typeof json != 'string') {
+                json = JSON.stringify(json, undefined, 2);
+            }
+            json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                function (match) {
+                    var cls = 'number';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'key';
+                        } else {
+                            cls = 'string';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'boolean';
+                    } else if (/null/.test(match)) {
+                        cls = 'null';
+                    }
+                    return '<span class="' + cls + '">' + match + '</span>';
+                }
+            );
+        }
+
+        layui.use(['admin', 'table'], function () {
+            var $ = layui.$, admin = layui.admin
+                , table = layui.table
+                , view = layui.view;
+
+            if (noticeInfo.params != null && noticeInfo.params != '') {
+                $("#template_params").html(syntaxHighlight(JSON.parse(noticeInfo.params)));
+            } else {
+                $("#template_params").html('无参数');
+            }
+
+        });
+    }
+</script>

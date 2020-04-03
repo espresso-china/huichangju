@@ -1,0 +1,263 @@
+<div class="layui-form" action="" lay-filter="form-notice-template">
+
+  <div class="layui-form-item" id="notice_template_type">
+    <label class="layui-form-label">发送类型</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <input type="radio" name="template_type" value="email" title="邮件" lay-verify="required"
+               lay-filter="template_type" {{ d.params.template_type=='email'?'checked':'' }}
+               {{d.params.template_code?'disabled':''}}>
+        <input type="radio" name="template_type" value="sms" title="短信" lay-verify="required"
+               lay-filter="template_type" {{ d.params.template_type=='sms'?'checked':'' }}
+               {{d.params.template_code?'disabled':''}}>
+        <input type="radio" name="template_type" value="minipg" title="小程序" lay-verify="required"
+               lay-filter="template_type" {{ d.params.template_type=='minipg'?'checked':'' }}
+               {{d.params.template_code?'disabled':''}}>
+      </script>
+    </div>
+  </div>
+  <div class="layui-form-item layui-col-md11">
+    <label class="layui-form-label">分类名称</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <select id="template_code" name="template_code" lay-verify="required" lay-filter="template_code"
+                {{d.params.template_code?'disabled':''}}>
+        <option value=""></option>
+        </select>
+      </script>
+    </div>
+  </div>
+  <div class="layui-form-item layui-col-md11">
+    <label class="layui-form-label">模版标题</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <input type="text" name="template_title" lay-verify="template_title" lay-filter="" autocomplete="off"
+               placeholder="请输入模版标题" class="layui-input" value="{{ d.params.template_title || '' }}">
+      </script>
+    </div>
+  </div>
+  <div class="layui-form-item layui-col-md11 layui-form-text">
+    <label class="layui-form-label">模版内容</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <textarea id="template_content" name="template_content" placeholder="请输入内容"
+                  class="layui-textarea">{{ d.params.template_content || '' }}</textarea>
+      </script>
+      <div class="layui-form-mid layui-word-aux">注意：{}符号内的内容不要修改。</div>
+    </div>
+  </div>
+  <div class="layui-form-item layui-col-md11 layui-form-text">
+    <label class="layui-form-label">模版可选项</label>
+    <div class="layui-input-block" id="template_items">
+
+    </div>
+  </div>
+  <div class="layui-form-item" id="sms_tpl">
+    <div class="layui-inline">
+      <label class="layui-form-label">阿里云短信</label>
+      <div class="layui-input-block" style="width:180px;">
+        <input type="text" name="third_tpl_id[Aliyun]" lay-verify="" lay-filter="" autocomplete="off"
+               placeholder="请输入第三方模版ID" class="layui-input" value="">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <label class="layui-form-label">腾讯云短信</label>
+      <div class="layui-input-block" style="width:180px;">
+        <input type="text" name="third_tpl_id[Qcloud]" lay-verify="" lay-filter="" autocomplete="off"
+               placeholder="请输入第三方模版ID" class="layui-input" value="">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <label class="layui-form-label">短信签名</label>
+      <div class="layui-input-block">
+        <script type="text/html" template>
+          <input type="text" name="sign_name" lay-verify="" lay-filter="sign_name"
+                 placeholder="请输入短信签名" class="layui-input" value="{{ d.params.sign_name || '' }}">
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item" id="wechat_tpl">
+    <div class="layui-inline">
+      <label class="layui-form-label">微信模版消息ID</label>
+      <div class="layui-input-block" style="width:280px;">
+        <input type="text" name="third_tpl_id" lay-verify="" lay-filter="" autocomplete="off"
+               placeholder="请输入第三方模版ID" class="layui-input" value="">
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">启用</label>
+      <div class="layui-input-block" style="width:80px;">
+        <script type="text/html" template>
+          <input type="checkbox" name="is_enable" value="{{ d.params.is_enable || 1 }}" id="is_enable"
+                 lay-skin="switch" lay-filter="is_enable" lay-text="启用|禁用"
+                 {{ d.params.is_enable== 1 ? 'checked':'' }} >
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <div class="layui-footer">
+        <button class="layui-btn" lay-submit="" lay-filter="form-notice-template-submit">立即提交</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/html" template lay-done="layui.data.initPage(d.params)"> </script>
+
+<script>
+
+    layui.data.initPage = function (templateInfo) {
+
+        layui.use(['admin', 'form', 'layer'], function () {
+            var $ = layui.$, layer = layui.layer
+                , admin = layui.admin
+                , form = layui.form;
+
+            var insertAtCaret = function (myValue) {
+                var $t = $("#template_content")[0];
+                if (document.selection) {
+                    this.focus();
+                    sel = document.selection.createRange();
+                    sel.text = myValue;
+                    this.focus();
+                } else if ($t.selectionStart || $t.selectionStart == '0') {
+                    var startPos = $t.selectionStart;
+                    var endPos = $t.selectionEnd;
+                    var scrollTop = $t.scrollTop;
+                    $t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+                    this.focus();
+                    $t.selectionStart = startPos + myValue.length;
+                    $t.selectionEnd = startPos + myValue.length;
+                    $t.scrollTop = scrollTop;
+                } else {
+                    this.value += myValue;
+                    this.focus();
+                }
+            }
+
+            var template_type = templateInfo.template_type || 'email';
+            var template_code = templateInfo.template_code || '';
+
+            if (template_type == 'sms') {
+                if (templateInfo.third_tpl_id) {
+                    $.each(JSON.parse(templateInfo.third_tpl_id), function (index, item) {
+                        layui.$('input[name="third_tpl_id[' + index + ']"]').val(item);
+                    })
+                }
+                $("#sms_tpl").show();
+                $("#wechat_tpl").hide();
+            } else if (template_type == 'minipg') {
+                layui.$('input[name="third_tpl_id"]').val(templateInfo.third_tpl_id);
+                $("#wechat_tpl").show();
+                $("#sms_tpl").hide();
+            } else {
+                $("#wechat_tpl").hide();
+                $("#sms_tpl").hide();
+            }
+
+            layui.$('input[name=\'template_type\'][value=\'' + template_type + '\']').attr('checked', true);
+            form.render('radio', 'form-notice-template');
+
+            /* 自定义验证规则 */
+            form.verify({
+                template_title: function (value) {
+                    if (value.length < 1) {
+                        return '名称不能为空';
+                    }
+                }
+            });
+
+            /* 监听指定开关 */
+            form.on('switch(status)', function (data) {
+                layer.tips('温馨提示：启用表示可用，禁用表示资源不可用', data.othis)
+            });
+
+            form.on('radio(template_type)', function (data) {
+                template_type = data.value;
+                if (template_type == 'sms') {
+                    $("#sms_tpl").show();
+                    $("#wechat_tpl").hide();
+                } else if (template_type == 'minipg') {
+                    $("#wechat_tpl").show();
+                    $("#sms_tpl").hide();
+                } else {
+                    $("#wechat_tpl").hide();
+                    $("#sms_tpl").hide();
+                }
+                loadTemplateCodeOptions(template_type, template_code);
+            });
+
+            form.on('select(template_code)', function (data) {
+                template_code = data.value;
+                loadTemplateItemOptions(template_code);
+            });
+
+            $("#template_items").on('click', 'button', function (event) {
+                var data = event.target.dataset;
+                if (template_type == 'sms' || template_type == 'minipg' || template_type == 'wechat') {
+                    insertAtCaret('{' + data.code + '}')
+                } else {
+                    insertAtCaret(data.name)
+                }
+            })
+
+            var loadTemplateCodeOptions = function (type, val) {
+                val = val || '';
+                admin.req({
+                    url: '../api/notice/template/codes',
+                    data: {type: type},
+                    success: function (result) {
+                        var html = '<option value=""></option>';
+                        if (result.code == 0) {
+                            $.each(result.data, function (index, item) {
+                                if (val == item.template_code) {
+                                    html += '<option value="' + item.template_code + '" selected>' + item.template_name + '</option>';
+                                } else {
+                                    html += '<option value="' + item.template_code + '" >' + item.template_name + '</option>';
+                                }
+                            })
+                        }
+                        $("#template_code").html(html);
+
+                        form.render('select', 'form-notice-template');
+                    }
+                })
+            }
+
+            var loadTemplateItemOptions = function (code) {
+                admin.req({
+                    url: '../api/notice/template/items',
+                    data: {code: code},
+                    success: function (result) {
+
+                        var html = '';
+                        if (result.code == 0) {
+                            $.each(result.data, function (index, item) {
+                                html += '<button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" data-name="' + item.show_name + '" data-code="' + item.replace_name + '">' +
+                                    item.item_name + '</button>'
+                            })
+                        }
+                        $("#template_items").html(html);
+
+                        form.render(null, 'form-notice-template');
+                    }
+                })
+            }
+
+            loadTemplateCodeOptions(template_type, template_code);
+
+            if (template_code != '') {
+                loadTemplateItemOptions(template_code);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,180 @@
+<title>网站设置</title>
+
+<style>
+    .layui-form-label {
+        width: 100px;
+    }
+
+    .layui-input-block {
+        margin-left: 130px;
+    }
+</style>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>设置</cite></a>
+        <a><cite>网站设置</cite></a>
+    </div>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">网站设置</div>
+                <div class="layui-card-body" pad15>
+
+                    <div class="layui-tab">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">基础设置</li>
+                            <li>使用规则</li>
+                            <li>关于我们</li>
+                        </ul>
+                        <div class="layui-tab-content layui-form" lay-filter="form-system-configs">
+
+                            <div class="layui-tab-item layui-show">
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">网站名称</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="SITE_NAME" value="" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">首页标题</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="SEO_TITLE" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">META关键词</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="SEO_META" class="layui-textarea"
+                                                  placeholder="多个关键词用英文状态 , 号分割"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">META描述</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="SEO_DESC" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">META其它</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="SEO_OTHER" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">版权信息</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="COPYRIGHT_DESC"
+                                                  class="layui-textarea">© 2018 xndl.com</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+                            <div class="layui-tab-item">
+                                <div class="layui-elem-quote">
+                                    使用规则
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">使用规则</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="USE_RULE" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="layui-tab-item">
+                                <div class="layui-elem-quote">
+                                    关于我们
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">关于我们</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="ABOUT_US" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="set_website">确认保存</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use('set', layui.factory('set'));
+
+    layui.use(['admin', 'form', 'upload', 'laytpl',], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , view = layui.view
+            , form = layui.form
+            , laytpl = layui.laytpl
+            , upload = layui.upload;
+
+        admin.req({
+            url: '../api/system/website/configs'
+            , success: function (result) {
+                for (var key in result.data.uses) {
+                    $("input[name='USED[" + key + "]'][value=" + result.data.uses[key] + "]").attr('checked', true);
+                }
+
+                //初始化会员提现
+                var WITHDRAW_BALANCE = result.data.configs.WITHDRAW_BALANCE ? JSON.parse(result.data.configs.WITHDRAW_BALANCE) : {};
+                for (var key in WITHDRAW_BALANCE) {
+                    $("input[name='WITHDRAW_BALANCE[" + key + "]']").val(WITHDRAW_BALANCE[key]);
+                }
+
+                //初始化商家提现
+                var SHOP_WITHDRAW_BALANCE = result.data.configs.SHOP_WITHDRAW_BALANCE ? JSON.parse(result.data.configs.SHOP_WITHDRAW_BALANCE) : {};
+                for (var key in SHOP_WITHDRAW_BALANCE) {
+                    $("input[name='SHOP_WITHDRAW_BALANCE[" + key + "]']").val(SHOP_WITHDRAW_BALANCE[key]);
+                }
+
+                //分销设置
+                var FX_PROMOTER = result.data.configs.FX_PROMOTER ? JSON.parse(result.data.configs.FX_PROMOTER) : {};
+                for (var key in FX_PROMOTER) {
+                    $("input[name='FX_PROMOTER[" + key + "]'][value=" + FX_PROMOTER[key] + "]").attr('checked', true);
+                }
+
+                //线下收款方式
+                var OFFLINE_PAY = result.data.configs.OFFLINE_PAY ? result.data.configs.OFFLINE_PAY : 0;
+                $("input[name='OFFLINE_PAY'][value=" + OFFLINE_PAY + "]").attr('checked', true);
+
+                //平台抽成方式
+                var PLATFORM_COMMISSION_TYPE = result.data.configs.PLATFORM_COMMISSION_TYPE ? result.data.configs.PLATFORM_COMMISSION_TYPE : 1;
+                $("input[name='PLATFORM_COMMISSION_TYPE'][value=" + PLATFORM_COMMISSION_TYPE + "]").attr('checked', true);
+
+                //邮箱设置
+                var EMAILMESSAGE = result.data.configs.EMAILMESSAGE ? JSON.parse(result.data.configs.EMAILMESSAGE) : {};
+                for (var key in EMAILMESSAGE) {
+                    if (key == 'email_is_security') {
+                        $("input[name='EMAILMESSAGE[" + key + "]'][value=" + EMAILMESSAGE[key] + "]").attr('checked', true);
+                    } else {
+                        $("input[name='EMAILMESSAGE[" + key + "]']").val(EMAILMESSAGE[key]);
+                    }
+                }
+
+                form.val('form-system-configs', result.data.configs);
+            }
+        });
+    });
+</script>
