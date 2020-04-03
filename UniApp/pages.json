@@ -3,6 +3,12 @@
 		{
 			"path": "pages/index/index",
 			"style": {}
+		},{
+			"path": "pages/index/list",
+			"style": {}
+		},{
+			"path": "pages/index/show",
+			"style": {}
 		}
 	],
 	"globalStyle": {

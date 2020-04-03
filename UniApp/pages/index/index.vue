@@ -1,5 +1,8 @@
 <template name="basics">
 	<view>
+		<cu-custom bgColor="bg-gradual-blue"> 
+			<block slot="content">找会场</block>
+		</cu-custom>
 		<scroll-view scroll-y class="page">
 			<form>
 				<view class="cu-form-group margin-top">
@@ -46,6 +49,10 @@
 					<view class="title">类别</view>
 					
 				</view>
+				<view class="padding flex flex-direction"> 
+					<button class="cu-btn bg-red margin-tb-sm lg">提交</button>
+				</view>
+				<navigator url="/pages/index/list">全部</navigator>
 			</form>
 			<view class="cu-tabbar-height"></view>
 		</scroll-view>
