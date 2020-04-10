@@ -1,17 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eccc26ff-7c24-465a-b160-478b5b07e9b3" name="Default Changelist" comment="" />
+    <list default="true" id="eccc26ff-7c24-465a-b160-478b5b07e9b3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Wechat/WechatAuthController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Wechat/WechatBaseController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Model/Order.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/MP_verify_Ixu4qt2x1vuRhXno.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/list.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/bj.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/bj2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/bj3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/front/hotel/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/front/hotel/list.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/front/hotel/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/UniApp/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/UniApp/pages/index/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/chunk-vendors.7f95189e.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/index.690f571c.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-avatar.fea077f1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-background.d5d4fad8.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-button.cd980dee.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-design.a58343cf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-icon.287c3f44.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-layout.81049e2f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-loading.60751a2f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-progress.131c5d9d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-shadow.8bcf578f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-tag.944ce026.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-basics-text.a14520c5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-component-bar.2c4980b7.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-component-card.46b08678.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-component-chat.877d8cc9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-component-form.d7b8f186.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-component-list.71dcb856.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-component-modal.d4b17086.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-component-nav.b4e2c011.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-component-steps.e154562c.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-component-swiper.764e3ff2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-component-timeline.93b45fcd.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-index-index.b5829315.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-plugin-animation.0342257e.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-plugin-drawer.3d7c49b4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-plugin-indexes.6c83f1b5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniApp/unpackage/dist/build/h5/static/js/pages-plugin-verticalnav.c49b20ce.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/H5/GoodsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/H5/HotelController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/H5/WeChatController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/H5/WeChatController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Model/Hotel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Hotel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Model/Member.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Member.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Eloquent/HotelRepositoryEloquent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Eloquent/HotelRepositoryEloquent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/hotel.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/hotel.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/src/views/hotel/lists.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/src/views/hotel/lists.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
     </execution>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProjectId" id="1a1FPL1za5IH2YSRMktN5oIDi4x" />
   <component name="ProjectViewState">
@@ -23,16 +90,19 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/src/views/hotel" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ask" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\www\huichangju\public\src\views\hotel" />
-      <recent name="D:\www\huichangju\app\Model" />
-      <recent name="D:\www\huichangju\app\Repositories\Eloquent" />
-      <recent name="D:\www\huichangju\app\Repositories" />
+      <recent name="D:\www\huichangju2\public\images" />
+      <recent name="D:\www\huichangju2\app\Model" />
+      <recent name="D:\www\huichangju2\resources\views\front\hotel" />
+      <recent name="D:\www\huichangju2\app\Http\Controllers\Wechat" />
+      <recent name="D:\www\huichangju2\public" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -46,6 +116,10 @@
       <option name="presentableId" value="Default" />
       <updated>1585895167609</updated>
       <workItem from="1585895171589" duration="19572000" />
+      <workItem from="1586225634470" duration="1559000" />
+      <workItem from="1586331508716" duration="11682000" />
+      <workItem from="1586350044079" duration="162000" />
+      <workItem from="1586428930491" duration="1977000" />
     </task>
     <servers />
   </component>
@@ -53,22 +127,35 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="612" y="201" key="#Deployment" timestamp="1585895380196">
+    <state x="612" y="201" key="#Deployment" timestamp="1586225649491">
       <screen x="121" y="0" width="1799" height="1080" />
     </state>
-    <state x="612" y="201" key="#Deployment/121.0.1799.1080/1920.-13.1920.1080@121.0.1799.1080" timestamp="1585895380196" />
-    <state x="347" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1585895753249">
+    <state x="612" y="201" key="#Deployment/121.0.1799.1080/1920.-13.1920.1080@121.0.1799.1080" timestamp="1586225649491" />
+    <state x="121" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586335172903">
       <screen x="121" y="0" width="1799" height="1080" />
     </state>
-    <state x="347" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/121.0.1799.1080/1920.-13.1920.1080@121.0.1799.1080" timestamp="1585895753249" />
+    <state x="121" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/121.0.1799.1080/1920.-13.1920.1080@121.0.1799.1080" timestamp="1586335172903" />
     <state x="750" y="297" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1585902372277">
       <screen x="121" y="0" width="1799" height="1080" />
     </state>
     <state x="750" y="297" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/121.0.1799.1080/1920.-13.1920.1080@121.0.1799.1080" timestamp="1585902372277" />
-    <state width="498" height="446" key="SwitcherDM" timestamp="1585915582593">
+    <state x="763" y="297" key="FileChooserDialogImpl" timestamp="1586482450200">
+      <screen x="62" y="0" width="1858" height="1080" />
+    </state>
+    <state x="800" y="297" key="FileChooserDialogImpl/121.0.1799.1080/1920.-13.1920.1080@121.0.1799.1080" timestamp="1586334133014" />
+    <state x="763" y="297" key="FileChooserDialogImpl/62.0.1858.1080/1920.-13.1920.1080@62.0.1858.1080" timestamp="1586482450200" />
+    <state x="837" y="470" key="NewPhpFileDialog" timestamp="1586335848880">
       <screen x="121" y="0" width="1799" height="1080" />
     </state>
-    <state width="498" height="446" key="SwitcherDM/121.0.1799.1080/1920.-13.1920.1080@121.0.1799.1080" timestamp="1585915582593" />
+    <state x="837" y="470" key="NewPhpFileDialog/121.0.1799.1080/1920.-13.1920.1080@121.0.1799.1080" timestamp="1586335848880" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1586333297638">
+      <screen x="121" y="0" width="1799" height="1080" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/121.0.1799.1080/1920.-13.1920.1080@121.0.1799.1080" timestamp="1586333297638" />
+    <state x="213" y="92" width="1615" height="896" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1586344212098">
+      <screen x="121" y="0" width="1799" height="1080" />
+    </state>
+    <state x="213" y="92" width="1615" height="896" key="com.intellij.history.integration.ui.views.FileHistoryDialog/121.0.1799.1080/1920.-13.1920.1080@121.0.1799.1080" timestamp="1586344212098" />
     <state x="707" y="295" width="626" height="490" key="find.popup" timestamp="1585913900561">
       <screen x="121" y="0" width="1799" height="1080" />
     </state>

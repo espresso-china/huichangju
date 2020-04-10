@@ -33,8 +33,8 @@ class WeChatController extends Controller
     {
         $previous_url = $request->session()->previousUrl();
 
-        if ($previous_url == $request->fullUrl()) {
-            $previous_url = '/h5/home/index';
+        if (!$previous_url) {
+            $previous_url = route('h5.hotel.index');
         }
 
         $request->session()->setPreviousUrl($previous_url);

@@ -17,7 +17,7 @@ class Hotel extends Model implements Transformable
     use SoftDeletes;
     use TransformableTrait;
 
-    protected $table = 'cms_hotel';
+    protected $table = 'sys_hotels';
 
     protected $primaryKey = 'id';
 

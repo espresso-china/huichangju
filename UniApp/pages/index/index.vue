@@ -4,7 +4,8 @@
 			<block slot="content">找会场</block>
 		</cu-custom>
 		<scroll-view scroll-y class="page">
-			<form>
+			<img src="../../images/logo.fw.png" class="logo" alt="">
+			<form class="form">
 				<view class="cu-form-group margin-top">
 					<view class="title">区域</view>
 					<picker @change="areaChange" :value="i" :range="areas">
@@ -113,6 +114,12 @@
 </script>
 
 <style>
+	.logo{
+		width: 200px;margin: 20px auto;
+	}
+	.form{
+		width: 90%;margin: 0 auto;
+	}
 	.cu-form-group .title {
 		min-width: calc(4em + 15px);
 	}

@@ -15,7 +15,7 @@ class Member extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table = 'xs_member';
+    protected $table = 'sys_member';
 
     protected $primaryKey = 'uid';
 

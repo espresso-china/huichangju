@@ -113,7 +113,7 @@
                     admin.req({
                         url: '../api/hotel/delete?token=' + layui.data('layuiAdmin').token,
                         type: "post",
-                        data: {id: data.id},
+                        data: {id: data.hotel_id},
                         async: false,
                         done: function (res) {
                             if (res.status == 0) {

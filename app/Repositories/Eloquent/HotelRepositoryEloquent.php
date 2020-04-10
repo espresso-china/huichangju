@@ -57,7 +57,7 @@ class HotelRepositoryEloquent extends BaseRepository implements HotelRepository
         if (empty($where)) {
             $where = $this->model;
         }
-        return $where->orderBy('listorder', 'asc')->orderBy('id', 'desc')->skip($page * $size ?? 0)->take($size ?? 10)->get();
+        return $where->orderBy('listorder', 'asc')->orderBy('create_time', 'desc')->skip($page * $size ?? 0)->take($size ?? 10)->get();
     }
 
     function getHotelCount($where = '')
